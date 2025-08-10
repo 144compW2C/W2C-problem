@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint src",
+    "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest watch",
+    "test": "vitest",
+    "test:watch": "vitest watch",
     "coverage": "vitest run --coverage",
     "format": "prettier . --write",
     "prepare": "husky",
