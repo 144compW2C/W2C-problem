@@ -1,0 +1,32 @@
+# マルチステージビルド用Dockerfile（本番用）
+# Build stage
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# package.json と package-lock.json をコピー
+COPY package*.json ./
+
+# 依存関係をインストール
+RUN npm ci
+
+# ソースコードをコピー
+COPY . .
+
+# ビルド実行
+RUN npm run build
+
+# Production stage
+FROM nginx:alpine AS production
+
+# ビルドされたファイルをNginxに配置
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Nginxの設定ファイルをコピー（SPAのため）
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+
+# ポートを公開
+EXPOSE 80
+
+# Nginxを起動
+CMD ["nginx", "-g", "daemon off;"]

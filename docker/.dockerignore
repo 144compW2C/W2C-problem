@@ -1,13 +1,10 @@
-# Logs
-logs
-*.log
+node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
 dist
 dist-ssr
 *.local
@@ -23,14 +20,26 @@ dist-ssr
 *.sln
 *.sw?
 
+# Git
+.git
+.gitignore
+README.md
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Logs
+logs
+*.log
+
+# Coverage directory used by tools like istanbul
+coverage
+*.nyc_output
+
 # ESLint cache
 .eslintcache
 
-*storybook.log
+# Storybook build outputs
 storybook-static
-
-# Playwright
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/

@@ -2,6 +2,58 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## 🐳 Docker での起動方法
+
+### 前提条件
+
+- Docker
+- Docker Compose
+
+### 開発環境の起動
+
+```bash
+# 開発サーバーを起動
+docker-compose -f docker/docker-compose.yml up app
+
+# または、Storybookを起動
+docker-compose -f docker/docker-compose.yml up storybook
+
+# すべてのサービスを起動
+docker-compose -f docker/docker-compose.yml up
+```
+
+アクセスURL:
+
+- React開発サーバー: http://localhost:5173
+- Storybook: http://localhost:6006
+
+### テストの実行
+
+```bash
+# 一回だけテストを実行
+docker-compose -f docker/docker-compose.yml run test
+
+# lint + test + coverage を実行
+docker-compose -f docker/docker-compose.yml run ci
+```
+
+### 本番ビルド
+
+```bash
+# 本番用イメージをビルド
+docker build -f docker/Dockerfile.prod -t w2c-problem:prod .
+
+# 本番用コンテナを起動
+docker run -p 8080:80 w2c-problem:prod
+```
+
+## 🛠️ ローカル開発
+
+### 前提条件
+
+- Node.js 20+
+- npm
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh

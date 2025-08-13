@@ -1,0 +1,62 @@
+services:
+  # 開発環境
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - '5173:5173' # Vite開発サーバー
+      - '6006:6006' # Storybook
+    volumes:
+      - ..:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev -- --host
+    stdin_open: true
+    tty: true
+
+  # Storybook用サービス
+  storybook:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - '6006:6006'
+    volumes:
+      - ..:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run storybook -- --host
+    stdin_open: true
+    tty: true
+
+  # テスト用サービス
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ..:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=test
+    command: npm run test:run
+
+  # CI/CD用テストサービス（lint + test + coverage）
+  ci:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ..:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=test
+    command: >
+      sh -c "
+        npm run lint &&
+        npm run test:run &&
+        npm run coverage
+      "
