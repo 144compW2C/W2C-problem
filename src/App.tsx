@@ -9,9 +9,9 @@ import {
 } from 'react-router-dom'
 import Login from './pages/Login/page'
 import Home from './pages/Home/page'
-import Problem from './pages/Problem/page'
 import NotFound from './pages/NotFound/page'
 import { Header } from './stories/Header'
+import Problems from './pages/Problems/page'
 
 const MainLayout: React.FC = () => {
   return (
@@ -28,7 +28,7 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/problem" element={<Problem />} />
+        <Route path="/problem" element={<Problems />} />
       </Route>
       <Route path="/*" element={<NotFound />} />
     </>,
