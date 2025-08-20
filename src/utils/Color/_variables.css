@@ -7,3 +7,10 @@
     --gray: #E6E6E6;  /* 灰色 */
     --red: #EC6F7C;  /* 赤色 */
 }
+
+/* 
+例）
+    .test {
+        background-color: var(--mouseColor);
+    } 
+*/
