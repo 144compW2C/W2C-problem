@@ -5,11 +5,14 @@
     --textColor: #010418;  /* 文字の色 */
     --textAlphaColor: #818181;  /* 薄い文字の色 */
     --gray: #E6E6E6;  /* 灰色 */
+    --grayText: #8C8C8C;  /* 灰色のテキスト */
     --red: #EC6F7C;  /* 赤色 */
 }
 
 /* 
 例）
+    @import '../../utils/Color/_variables.css';
+
     .test {
         background-color: var(--mouseColor);
     } 

@@ -12,6 +12,7 @@ import Home from './pages/Home/page'
 import NotFound from './pages/NotFound/page'
 import { Header } from './stories/Header'
 import Problems from './pages/Problems/page'
+import CreateProblem from './pages/CreateProblem'
 
 const MainLayout: React.FC = () => {
   return (
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<MainLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/problem" element={<Problems />} />
+        <Route path="/createProblem" element={<CreateProblem />} />
       </Route>
       <Route path="/*" element={<NotFound />} />
     </>,
