@@ -1,5 +1,6 @@
 import { CreateProblemApi } from '@/models/vo/CreateProblem/type'
 import { ActionType } from './reducer'
+import { NumberUtils } from '@/utils/number_utils'
 
 export namespace Action {
   export async function findCreateProblem(
@@ -19,8 +20,8 @@ export namespace Action {
 
     try {
       const params = new URLSearchParams({
-        offset: cond.offset,
-        limit: cond.limit,
+        offset: NumberUtils.formatNumber(cond.offset),
+        limit: NumberUtils.formatNumber(cond.limit),
       })
 
       const CreateProblemRes = await fetch(
