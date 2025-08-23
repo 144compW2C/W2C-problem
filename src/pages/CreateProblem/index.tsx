@@ -1,28 +1,47 @@
-import { useLocation, useSearchParams } from 'react-router-dom'
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom'
 import styles from './style.module.css'
-import { useEffect } from 'react'
+import { useEffect, useReducer } from 'react'
 import { Button } from '@/stories/Button'
 import { useGenre } from '@/hooks/useGenre'
+import { Action } from './action'
+import { defaultState, reducer } from './reducer'
+import { NumberUtils } from '@/utils/number_utils'
 
 export default function CreateProblem() {
+  const [state, dispatch] = useReducer(reducer, undefined, defaultState)
   const [searchParams] = useSearchParams()
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const id = searchParams.get('id') ?? ''
+    const id = NumberUtils.parseNumber(searchParams.get('id'), 0)
+    const offset = NumberUtils.parseNumber(searchParams.get('offset'), 0)
+    const limit = NumberUtils.parseNumber(searchParams.get('limit'), 10)
 
-    console.log(id)
     // この下にaction.tsを経由してAPIをたたく処理の関数を書く
+    Action.findCreateProblem(dispatch, {
+      offset,
+      limit,
+      id,
+    })
   }, [location.search])
 
-  console.log(location.search)
+  console.log(state)
 
   return (
     <>
       <div className={styles.title}>
         <h2 className={styles.h2}>問題作成</h2>
         <div className={styles.newCreateProblem}>
-          <Button label="新規作成" />
+          <Button
+            label="新規作成"
+            onClick={() => navigate(`/createProblem/new`)}
+          />
         </div>
       </div>
       <div className={styles.createProblemWrap}>
@@ -44,20 +63,35 @@ export default function CreateProblem() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <p>見出し表示</p>
-              </td>
-              <td>
-                <p style={{ background: useGenre('HTML') }}>HTML</p>
-              </td>
-              <td>
-                <p>1-1</p>
-              </td>
-              <td>
-                <p>申請中</p>
-              </td>
-            </tr>
+            {state.createProblemTotal !== 0 &&
+              state.createProblemList.map((item) => (
+                <tr
+                  key={item.id}
+                  onClick={() => {
+                    navigate(`/createProblem/${item.id}`)
+                  }}
+                >
+                  <td>
+                    <p>{item.title}</p>
+                  </td>
+                  <td>
+                    <p
+                      style={{ background: useGenre(item.tags) }}
+                      className={styles.tags}
+                    >
+                      {item.tags}
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                      {item.level}-{item.difficulty}
+                    </p>
+                  </td>
+                  <td>
+                    <p>{item.status}</p>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

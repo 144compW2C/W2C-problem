@@ -33,7 +33,7 @@ export function defaultState(): State {
   return {
     isWaiting: false,
     offset: 0,
-    limit: 5,
+    limit: 10,
     createProblemList: [],
     createProblemTotal: 0,
   }
