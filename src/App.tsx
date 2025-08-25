@@ -10,8 +10,8 @@ import {
 import Login from './pages/Login/page'
 import Home from './pages/Home/page'
 import NotFound from './pages/NotFound/page'
-import { Header } from './stories/Header'
 import Problems from './pages/Problems/page'
+import Header from './components/Header/Header'
 import CreateProblem from './pages/CreateProblem'
 import CreateProblemDetail from './pages/CreateProblem/detail'
 

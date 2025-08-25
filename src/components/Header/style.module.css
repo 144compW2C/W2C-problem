@@ -1,0 +1,113 @@
+
+.header{
+    position: fixed;
+    background: #86A0A6;
+    padding: 10px 25px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    .figure {
+        width: 30px;       
+        height: 30px;      
+        border-radius: 50%; 
+        overflow: hidden;   
+        position: relative; 
+    }
+    .icon{
+        width: inherit;     
+        height: inherit;    
+        position: absolute; 
+        top: 0;             
+        left: 0;            
+    }
+    z-index: 1000;
+}
+
+.nav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #A4BFC5;
+    height: 100vh;
+    width: 240px;
+    transform: translateX(-100%);
+    transition: transform .4s;
+    z-index: 1;
+    ul{
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        margin-top: 100px;
+        li{
+            display: flex;
+            align-items: center;
+            margin: auto;
+            color: #818181;
+            background-color: #ffffffbb;
+            list-style: none;
+            width: 210px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            border-radius: 5px;
+            font-family: "A P-OTF A1Gothic Std";
+            &:nth-child(1)::before{
+                content: url("../../assets/homeIcon.svg");
+                height: 40px;
+                width: 40px;
+                margin: 0 10px;
+            }
+            &:nth-child(2)::before{
+                content: url("../../assets/taskIcon.svg");
+                height: 40px;
+                width: 40px;
+                margin: 0 10px;
+            }
+            &:nth-child(3)::before{
+                content: url("../../assets/createTaskIcon.svg");
+                height: 40px;
+                width: 40px;
+                margin: 0 10px;
+            }
+            &:hover{
+                background: #86a0a680;
+                color: #FFFFFF;
+                &:nth-child(1)::before{
+                    content: url("../../assets/homeIconAc.svg");
+                    height: 40px;
+                    width: 40px;
+                    margin: 0 10px;
+                }
+                &:nth-child(2)::before{
+                    content: url("../../assets/taskIconAc.svg");
+                    height: 40px;
+                    width: 40px;
+                    margin: 0 10px;
+                }
+                &:nth-child(3)::before{
+                    content: url("../../assets/createTaskIconAc.svg");
+                    height: 40px;
+                    width: 40px;
+                    margin: 0 10px;
+                }    
+                
+            }
+        }
+        .active{
+            background: #86A0A6;
+            color: #FFFFFF;
+            &:nth-child(1)::before{
+                content: url("../../assets/homeIconAc.svg");
+                height: 40px;
+                width: 40px;
+                margin: 0 10px;
+            }
+
+        }
+    }
+}
+
+.hamburgerOpen{
+    transform: translateX(0);
+}
