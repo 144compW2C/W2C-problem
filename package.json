@@ -23,9 +23,11 @@
     "docker:build:prod": "docker build -f docker/Dockerfile.prod -t w2c-problem:prod ."
   },
   "dependencies": {
+    "big.js": "^7.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.8.0"
+    "react-router-dom": "^7.8.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.0",
@@ -39,6 +41,7 @@
     "@testing-library/jest-dom": "^6.6.4",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
+    "@types/big.js": "^6.2.2",
     "@types/node": "^24.2.1",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
