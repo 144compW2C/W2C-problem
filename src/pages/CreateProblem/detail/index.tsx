@@ -1,16 +1,23 @@
 import { Button } from '@/stories/Button'
 import styles from './style.module.css'
-import { useEffect } from 'react'
+import { useEffect, useReducer } from 'react'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import { NumberUtils } from '@/utils/number_utils'
+import { Action } from './action'
+import { defaultState, reducer } from './reducer'
 
 export default function CreateProblemDetail() {
+    const [state, dispatch] = useReducer(reducer, undefined, defaultState)
     const location = useLocation()
     const [searchParams] = useSearchParams()
 
     useEffect(() => {
         const id = NumberUtils.parseNumber(searchParams.get('id'), 0)
+
+        Action.findCreateProblemDetail(dispatch, { id })
     }, [location.search])
+
+    console.log(state)
 
     return (
         <>
@@ -23,11 +30,19 @@ export default function CreateProblemDetail() {
             <div className={styles.newCreateProblemWrap}>
                 <div className={styles.newCreateProblemTitle}>
                     <p>タイトル</p>
-                    <input type="text" id="title" />
+                    <input
+                        type="text"
+                        id="title"
+                        value={state.createProblemDetail.title}
+                    />
                 </div>
                 <div className={styles.newCreateProblemMainText}>
                     <p>問題本文</p>
-                    <textarea name="mainText" id="mainText"></textarea>
+                    <textarea
+                        name="mainText"
+                        id="mainText"
+                        value={state.createProblemDetail.body}
+                    ></textarea>
                 </div>
                 <div className={styles.newCreateProblemAddImg}>
                     <p>画像追加</p>

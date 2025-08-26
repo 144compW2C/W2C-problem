@@ -26,7 +26,7 @@ export default function CreateProblem() {
         })
     }, [location.search])
 
-    console.log(state)
+    // console.log(state)
 
     return (
         <>
