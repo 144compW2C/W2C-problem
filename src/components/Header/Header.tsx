@@ -9,7 +9,7 @@ export default function Header() {
     const toggleHamburger = () => {
         setIsOpen(!isOpen)
     }
-    const pathname = useLocation()
+    const location = useLocation()
     return (
         <header>
             <div className={styles.header}>
