@@ -1,7 +1,8 @@
+@import '../../utils/Color/_variables.css';
 
 .header{
     position: fixed;
-    background: #86A0A6;
+    background: var(--mouseColor);
     padding: 10px 25px;
     position: relative;
     display: flex;
@@ -27,7 +28,7 @@
     position: fixed;
     top: 0;
     left: -300px;
-    background: #A4BFC5;
+    background: var(--lightMouseColor);
     height: 100vh;
     width: 240px;
     /* transform: translateX(-100%); */
@@ -43,8 +44,8 @@
             display: flex;
             align-items: center;
             margin: auto;
-            color: #818181;
-            background-color: #ffffffbb;
+            color: var(--grayText);
+            background-color: var(--whiteAlpha70);
             list-style: none;
             width: 210px;
             height: 50px;
@@ -77,8 +78,9 @@
                 margin: 0 10px;
             }
             &:hover{
-                background: #86a0a680;
-                color: #FFFFFF;
+                background: var(--mouseColor);
+                opacity: 70%;
+                color: var(--whiteText);
                 &:nth-child(1)::before{
                     content: url("../../assets/homeIconAc.svg");
                     height: 40px;
@@ -106,8 +108,8 @@
             }
         }
         .active{
-            background: #86A0A6;
-            color: #FFFFFF;
+            background: var(--mouseColor);
+            color: var(--whiteText);
             &:nth-child(1)::before{
                 content: url("../../assets/homeIconAc.svg");
                 height: 40px;
