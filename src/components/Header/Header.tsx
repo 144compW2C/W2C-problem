@@ -2,7 +2,7 @@ import styles from './style.module.css'
 import hamburgerIcon from '../../assets/hamburger.svg'
 import iconImg from '../../assets/icon.jpg'
 import { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false)
