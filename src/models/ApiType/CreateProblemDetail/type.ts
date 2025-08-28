@@ -1,4 +1,5 @@
 import { ProblemVO } from '@/models/entity/Problem'
+import { TagsVO } from '@/models/entity/Tags'
 
 export namespace CreateProblemDetailApi {
     export namespace GET {
@@ -8,6 +9,7 @@ export namespace CreateProblemDetailApi {
 
         export type Response = {
             item: ProblemVO.Type
+            tags: TagsVO.Type[]
         }
     }
 }

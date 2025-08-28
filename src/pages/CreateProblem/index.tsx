@@ -26,7 +26,7 @@ export default function CreateProblem() {
         })
     }, [location.search])
 
-    // console.log(state)
+    console.log(state)
 
     return (
         <>
@@ -78,7 +78,11 @@ export default function CreateProblem() {
                                             }}
                                             className={styles.tags}
                                         >
-                                            {item.tags}
+                                            {state.tags.map((tag) =>
+                                                tag.id === item.tags
+                                                    ? tag.tag_name
+                                                    : '',
+                                            )}
                                         </p>
                                     </td>
                                     <td>
@@ -87,7 +91,13 @@ export default function CreateProblem() {
                                         </p>
                                     </td>
                                     <td>
-                                        <p>{item.status}</p>
+                                        <p>
+                                            {state.status.map((sta) =>
+                                                sta.id === item.status
+                                                    ? sta.status_name
+                                                    : '',
+                                            )}
+                                        </p>
                                     </td>
                                 </tr>
                             ))}

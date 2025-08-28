@@ -5,6 +5,7 @@ import { useLocation, useSearchParams } from 'react-router-dom'
 import { NumberUtils } from '@/utils/number_utils'
 import { Action } from './action'
 import { defaultState, reducer } from './reducer'
+import { Dropdown } from 'primereact/dropdown'
 
 export default function CreateProblemDetail() {
     const [state, dispatch] = useReducer(reducer, undefined, defaultState)
@@ -34,6 +35,13 @@ export default function CreateProblemDetail() {
                         type="text"
                         id="title"
                         value={state.createProblemDetail.title}
+                        onChange={(e) => {
+                            Action.editForm(
+                                dispatch,
+                                'newCreate.problem.title',
+                                e.target.value,
+                            )
+                        }}
                     />
                 </div>
                 <div className={styles.newCreateProblemMainText}>
@@ -42,6 +50,13 @@ export default function CreateProblemDetail() {
                         name="mainText"
                         id="mainText"
                         value={state.createProblemDetail.body}
+                        onChange={(e) => {
+                            Action.editForm(
+                                dispatch,
+                                'newCreate.problem.body',
+                                e.target.value,
+                            )
+                        }}
                     ></textarea>
                 </div>
                 <div className={styles.newCreateProblemAddImg}>
@@ -50,7 +65,22 @@ export default function CreateProblemDetail() {
                 </div>
                 <div className={styles.newCreateProblemGenre}>
                     <p>ジャンル</p>
-                    <div>HTML</div>
+                    <Dropdown
+                        value={state.createProblemDetail.tags}
+                        placeholder="タグを選択"
+                        id="tags"
+                        className={styles.dropdown}
+                        options={state.tags}
+                        optionLabel="tag_name"
+                        optionValue="id"
+                        onChange={(e) => {
+                            Action.editForm(
+                                dispatch,
+                                'newCreate.problem.tags',
+                                e.target.value,
+                            )
+                        }}
+                    />
                 </div>
                 <div className={styles.newCreateProblemLevel}>
                     <p>レベル</p>
@@ -60,7 +90,15 @@ export default function CreateProblemDetail() {
                                 type="radio"
                                 id="one"
                                 name="level"
-                                value={'1'}
+                                value={1}
+                                checked={state.createProblemDetail.level === 1}
+                                onChange={(e) => {
+                                    Action.editForm(
+                                        dispatch,
+                                        'newCreate.problem.level',
+                                        Number(e.target.value),
+                                    )
+                                }}
                             />
                             <label htmlFor="one">1</label>
                         </div>
@@ -69,7 +107,15 @@ export default function CreateProblemDetail() {
                                 type="radio"
                                 id="two"
                                 name="level"
-                                value={'2'}
+                                value={2}
+                                checked={state.createProblemDetail.level === 2}
+                                onChange={(e) => {
+                                    Action.editForm(
+                                        dispatch,
+                                        'newCreate.problem.level',
+                                        Number(e.target.value),
+                                    )
+                                }}
                             />
                             <label htmlFor="two">2</label>
                         </div>
@@ -78,7 +124,15 @@ export default function CreateProblemDetail() {
                                 type="radio"
                                 id="three"
                                 name="level"
-                                value={'3'}
+                                value={3}
+                                checked={state.createProblemDetail.level === 3}
+                                onChange={(e) => {
+                                    Action.editForm(
+                                        dispatch,
+                                        'newCreate.problem.level',
+                                        Number(e.target.value),
+                                    )
+                                }}
                             />
                             <label htmlFor="three">3</label>
                         </div>
@@ -93,6 +147,17 @@ export default function CreateProblemDetail() {
                                 id="description"
                                 name="format"
                                 value={'true'}
+                                checked={
+                                    state.createProblemDetail
+                                        .is_multiple_choice === true
+                                }
+                                onChange={(e) => {
+                                    Action.editForm(
+                                        dispatch,
+                                        'newCreate.problem.description',
+                                        e.target.value === 'true',
+                                    )
+                                }}
                             />
                             <label htmlFor="description">記述式</label>
                         </div>
@@ -102,10 +167,60 @@ export default function CreateProblemDetail() {
                                 id="choice"
                                 name="format"
                                 value={'false'}
+                                checked={
+                                    state.createProblemDetail
+                                        .is_multiple_choice === false
+                                }
+                                onChange={(e) => {
+                                    Action.editForm(
+                                        dispatch,
+                                        'newCreate.problem.description',
+                                        e.target.value === 'true',
+                                    )
+                                }}
                             />
                             <label htmlFor="choice">選択式</label>
                         </div>
                     </div>
+                </div>
+                {state.createProblemDetail.is_multiple_choice ? (
+                    <>
+                        <div className={styles.newCreateProblemMainText}>
+                            <p>模範解答</p>
+                            <textarea
+                                name="mainText"
+                                id="mainText"
+                                value={'state.createProblemDetail.body'}
+                                onChange={(e) => {
+                                    // Action.editForm(dispatch, 'newCreate.problem.body', e.target.value)
+                                }}
+                            ></textarea>
+                        </div>
+                        <div className={styles.newCreateProblemZip}>
+                            <p>初期zip</p>
+                            <input
+                                type="text"
+                                id="zipText"
+                                placeholder="ファイルの名前"
+                                onChange={(e) => {
+                                    // Action.editForm(dispatch, 'newCreate.problem.title', e.target.value)
+                                }}
+                            />
+                            <input type="file" id="zipFile" />
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div>
+                            <p>選択問題</p>
+                        </div>
+                        <div>
+                            <p>模範解答</p>
+                        </div>
+                    </>
+                )}
+                <div className={styles.append}>
+                    <Button label="申請する" />
                 </div>
             </div>
         </>
