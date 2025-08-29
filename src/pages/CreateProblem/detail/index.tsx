@@ -269,6 +269,15 @@ export default function CreateProblemDetail() {
                                             {con.map((choice, choIdx) => (
                                                 <>
                                                     <div key={choIdx}>
+                                                        {choIdx >= 2 && (
+                                                            <button
+                                                                className={
+                                                                    styles.removeBtn
+                                                                }
+                                                            >
+                                                                -
+                                                            </button>
+                                                        )}
                                                         <label htmlFor="">
                                                             {choIdx + 1}.{' '}
                                                         </label>

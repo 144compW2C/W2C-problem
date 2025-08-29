@@ -1,0 +1,21 @@
+@import '../../../utils/Color/_variables.css';
+
+.Btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--red);
+    border: none;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 2px;
+        background-color: white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

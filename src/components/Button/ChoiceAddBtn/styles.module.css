@@ -1,0 +1,31 @@
+@import '../../../utils/Color/_variables.css';
+
+.Btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    border: var(--textColor) 2px solid;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 2px;
+        background-color: var(--textColor);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    &::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        height: 10px;
+        background-color: var(--textColor);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
