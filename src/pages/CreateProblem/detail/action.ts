@@ -82,6 +82,42 @@ export namespace Action {
             throw e
         }
     }
+
+    export function convertStringsToArray(
+        dispatch: React.Dispatch<ActionType>,
+        cond: {
+            content: string
+            option_name: string
+            model_answer: string
+        },
+    ) {
+        let optionContent: string[][] = []
+        let optionName: string[] = []
+        let modelAnswer: string[] = []
+
+        try {
+            // JSON文字列を配列に変換
+            optionContent = JSON.parse(cond.content) as string[][]
+            optionName = JSON.parse(cond.option_name) as string[]
+            modelAnswer = JSON.parse(cond.model_answer) as string[]
+        } catch (error) {
+            console.error('JSON parse error:', error)
+            // パースに失敗した場合は空配列を使用
+            optionContent = []
+            optionName = []
+            modelAnswer = []
+        }
+
+        dispatch({
+            type: 'CONVERT_STRINGS_TO_ARRAY',
+            payload: {
+                optionContent,
+                optionName,
+                modelAnswer,
+            },
+        })
+    }
+
     export function nextPage(dispatch: React.Dispatch<ActionType>) {
         dispatch({ type: 'NEXT_PAGE' })
     }

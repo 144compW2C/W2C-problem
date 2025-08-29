@@ -29,6 +29,15 @@ export type ActionType =
       }
     // ==============================================
     | {
+          type: 'CONVERT_STRINGS_TO_ARRAY'
+          payload: {
+              optionContent: string[][]
+              optionName: string[]
+              modelAnswer: string[]
+          }
+      }
+    // ==============================================
+    | {
           type: 'NEXT_PAGE'
       }
     | {
@@ -42,6 +51,9 @@ export type State = {
     tags: TagsVO.Type[]
     option: OptionsVO.Type
     pageNum: number
+    optionContent: string[][]
+    optionName: string[]
+    modelAnswer: string[]
 }
 
 export function defaultState(): State {
@@ -51,6 +63,9 @@ export function defaultState(): State {
         tags: [],
         option: OptionsVO.create(),
         pageNum: 0,
+        optionContent: [],
+        optionName: [],
+        modelAnswer: [],
     }
 }
 
@@ -96,7 +111,15 @@ export function reducer(state: State, action: ActionType): State {
                         ...state,
                         createProblemDetail: {
                             ...state.createProblemDetail,
-                            tags: action.payload.value,
+                            fk_tags: action.payload.value,
+                        },
+                    }
+                case 'newCreate.problem.model_answer':
+                    return {
+                        ...state,
+                        createProblemDetail: {
+                            ...state.createProblemDetail,
+                            model_answer: action.payload.value,
                         },
                     }
             }
@@ -120,6 +143,14 @@ export function reducer(state: State, action: ActionType): State {
             return {
                 ...state,
                 isWaiting: false,
+            }
+        // ==============================================
+        case 'CONVERT_STRINGS_TO_ARRAY':
+            return {
+                ...state,
+                optionContent: action.payload.optionContent,
+                optionName: action.payload.optionName,
+                modelAnswer: action.payload.modelAnswer,
             }
         // ==============================================
         case 'NEXT_PAGE':
