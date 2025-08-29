@@ -3,6 +3,7 @@ import { ActionType } from './reducer'
 import { ProblemVO, testData } from '@/models/entity/Problem'
 import { CreateProblemDetailApi } from '@/models/ApiType/CreateProblemDetail/type'
 import { tagsTestDate } from '@/models/entity/Tags'
+import { OptionsVO, optionTestDate } from '@/models/entity/Options'
 
 export namespace Action {
     export async function editForm(
@@ -47,29 +48,44 @@ export namespace Action {
             // await CreateProblemRes.json()
             /* ここまで */
             let detail = ProblemVO.create()
-            const tags = tagsTestDate
-
             testData.forEach((element) => {
                 if (element.id === cond.id) {
                     detail = element
                 }
             })
 
+            let option = OptionsVO.create()
+            optionTestDate.forEach((element) => {
+                if (detail.id === element.fk_problem) {
+                    option = element
+                }
+            })
+
+            const tags = tagsTestDate
+
             const CreateProblemResult: CreateProblemDetailApi.GET.Response = {
                 item: detail,
                 tags,
+                option,
             }
 
             dispatch({
                 type: 'FIND_CREATE_PROBLEM_DETAIL_SUCCESS',
                 payload: {
                     createProblemDetail: CreateProblemResult.item,
-                    tags,
+                    tags: CreateProblemResult.tags,
+                    option: CreateProblemResult.option,
                 },
             })
         } catch (e) {
             dispatch({ type: 'FIND_CREATE_PROBLEM_DETAIL_FAILURE' })
             throw e
         }
+    }
+    export function nextPage(dispatch: React.Dispatch<ActionType>) {
+        dispatch({ type: 'NEXT_PAGE' })
+    }
+    export function backPage(dispatch: React.Dispatch<ActionType>) {
+        dispatch({ type: 'BACK_PAGE' })
     }
 }

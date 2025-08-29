@@ -1,5 +1,7 @@
+import { OptionsVO } from '@/models/entity/Options'
 import { ProblemVO } from '@/models/entity/Problem'
 import { TagsVO } from '@/models/entity/Tags'
+import { stat } from 'fs'
 
 export type ActionType =
     //===============================================
@@ -19,28 +21,36 @@ export type ActionType =
           payload: {
               createProblemDetail: ProblemVO.Type
               tags: TagsVO.Type[]
+              option: OptionsVO.Type
           }
       }
     | {
           type: 'FIND_CREATE_PROBLEM_DETAIL_FAILURE'
       }
+    // ==============================================
+    | {
+          type: 'NEXT_PAGE'
+      }
+    | {
+          type: 'BACK_PAGE'
+      }
 // ==============================================
 
 export type State = {
     isWaiting: boolean
-    offset: number
-    limit: number
     createProblemDetail: ProblemVO.Type
     tags: TagsVO.Type[]
+    option: OptionsVO.Type
+    pageNum: number
 }
 
 export function defaultState(): State {
     return {
         isWaiting: false,
-        offset: 0,
-        limit: 10,
         createProblemDetail: ProblemVO.create(),
         tags: [],
+        option: OptionsVO.create(),
+        pageNum: 0,
     }
 }
 
@@ -104,11 +114,23 @@ export function reducer(state: State, action: ActionType): State {
                 isWaiting: false,
                 createProblemDetail: action.payload.createProblemDetail,
                 tags: action.payload.tags,
+                option: action.payload.option,
             }
         case 'FIND_CREATE_PROBLEM_DETAIL_FAILURE':
             return {
                 ...state,
                 isWaiting: false,
+            }
+        // ==============================================
+        case 'NEXT_PAGE':
+            return {
+                ...state,
+                pageNum: state.pageNum++,
+            }
+        case 'BACK_PAGE':
+            return {
+                ...state,
+                pageNum: state.pageNum !== 0 ? state.pageNum-- : state.pageNum,
             }
         // ==============================================
     }
