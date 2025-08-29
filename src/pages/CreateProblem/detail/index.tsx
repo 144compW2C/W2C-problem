@@ -6,6 +6,8 @@ import { NumberUtils } from '@/utils/number_utils'
 import { Action } from './action'
 import { defaultState, reducer } from './reducer'
 import { Dropdown } from 'primereact/dropdown'
+import ChoiceRemoveBtn from '@/components/Button/ChoiceRemoveBtn/ChoiceRemoveBtn'
+import ChoiceAddBtn from '@/components/Button/ChoiceAddBtn/ChoiceAddBtn'
 
 export default function CreateProblemDetail() {
     const [state, dispatch] = useReducer(reducer, undefined, defaultState)
@@ -270,16 +272,16 @@ export default function CreateProblemDetail() {
                                                 <>
                                                     <div key={choIdx}>
                                                         {choIdx >= 2 && (
-                                                            <button
-                                                                className={
-                                                                    styles.removeBtn
-                                                                }
-                                                            >
-                                                                -
-                                                            </button>
+                                                            <ChoiceRemoveBtn
+                                                                void={() => {
+                                                                    console.log(
+                                                                        'aaa',
+                                                                    )
+                                                                }}
+                                                            />
                                                         )}
                                                         <label htmlFor="">
-                                                            {choIdx + 1}.{' '}
+                                                            {choIdx + 1}.
                                                         </label>
                                                         <input
                                                             type="text"
@@ -298,14 +300,18 @@ export default function CreateProblemDetail() {
                                                     </div>
                                                     {choIdx ===
                                                         con.length - 1 && (
-                                                        <button>+</button>
+                                                        <ChoiceAddBtn
+                                                            void={() => {}}
+                                                        />
                                                     )}
                                                 </>
                                             ))}
                                         </div>
                                     </div>
                                 ))}
-                                <button>問題追加 +</button>
+                                <div className={styles.columnAddBtn}>
+                                    <ChoiceAddBtn void={() => {}} />
+                                </div>
                             </div>
                         </div>
                         <div className={styles.selectAnswer}>
