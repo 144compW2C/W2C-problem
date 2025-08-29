@@ -78,8 +78,7 @@ export const testData = [
         level: 1,
         difficulty: 2,
         is_multiple_choice: false,
-        model_answer:
-            '["idはプロジェクト内に同じ名前は1つだけ","classはプロジェクト内に同じ名前は複数つけれる"]',
+        model_answer: '[0,1]',
         created_at: '2025-07-01T10:00:00Z',
         updated_at: '2025-07-02T08:00:00Z',
         reviewed_at: '2025-07-02T10:00:00Z',

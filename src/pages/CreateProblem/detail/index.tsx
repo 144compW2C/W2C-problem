@@ -261,6 +261,7 @@ export default function CreateProblemDetail() {
                                                     dispatch,
                                                     'newCreate.problem.optionName',
                                                     e.target.value,
+                                                    conIdx,
                                                 )
                                             }}
                                         />
@@ -274,6 +275,16 @@ export default function CreateProblemDetail() {
                                                         <input
                                                             type="text"
                                                             value={choice}
+                                                            onChange={(e) => {
+                                                                Action.editForm(
+                                                                    dispatch,
+                                                                    'newCreate.problem.choice',
+                                                                    e.target
+                                                                        .value,
+                                                                    conIdx,
+                                                                    choIdx,
+                                                                )
+                                                            }}
                                                         />
                                                     </div>
                                                     {choIdx ===
@@ -303,14 +314,20 @@ export default function CreateProblemDetail() {
                                             className={styles.dropdown}
                                             options={state.optionContent[
                                                 index
-                                            ].map((choice) => ({
+                                            ].map((choice, index) => ({
                                                 label: choice,
+                                                id: index,
                                             }))}
                                             optionLabel="label"
-                                            optionValue="label"
+                                            optionValue="id"
                                             onChange={(e) => {
                                                 /* 模範解答取得のAPIを叩くアクションを指定 */
-                                                // Action.editForm()
+                                                Action.editForm(
+                                                    dispatch,
+                                                    'newCreate.problem.selectAnswer',
+                                                    e.target.value,
+                                                    index,
+                                                )
                                             }}
                                         />
                                     </div>

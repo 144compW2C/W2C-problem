@@ -10,6 +10,8 @@ export type ActionType =
           payload: {
               targetName: string
               value: any
+              index?: number
+              choiceIdx?: number
           }
       }
     // ==============================================
@@ -33,7 +35,7 @@ export type ActionType =
           payload: {
               optionContent: string[][]
               optionName: string[]
-              modelAnswer: string[]
+              modelAnswer: number[]
           }
       }
     // ==============================================
@@ -53,7 +55,7 @@ export type State = {
     pageNum: number
     optionContent: string[][]
     optionName: string[]
-    modelAnswer: string[]
+    modelAnswer: number[]
 }
 
 export function defaultState(): State {
@@ -114,6 +116,7 @@ export function reducer(state: State, action: ActionType): State {
                             fk_tags: action.payload.value,
                         },
                     }
+                /* 記述式 */
                 case 'newCreate.problem.model_answer':
                     return {
                         ...state,
@@ -121,6 +124,37 @@ export function reducer(state: State, action: ActionType): State {
                             ...state.createProblemDetail,
                             model_answer: action.payload.value,
                         },
+                    }
+                /* 選択式 */
+                case 'newCreate.problem.optionName':
+                    return {
+                        ...state,
+                        optionName: state.optionName.map((row, idx) =>
+                            idx !== action.payload.index
+                                ? row
+                                : action.payload.value,
+                        ),
+                    }
+                case 'newCreate.problem.choice':
+                    return {
+                        ...state,
+                        optionContent: state.optionContent.map((row, rIdx) =>
+                            row.map((col, cIdx) =>
+                                rIdx === action.payload.index &&
+                                cIdx === action.payload.choiceIdx
+                                    ? action.payload.value
+                                    : col,
+                            ),
+                        ),
+                    }
+                case 'newCreate.problem.selectAnswer':
+                    return {
+                        ...state,
+                        modelAnswer: state.modelAnswer.map((row, idx) =>
+                            idx !== action.payload.index
+                                ? row
+                                : action.payload.value,
+                        ),
                     }
             }
             throw new (class SystemException {})()

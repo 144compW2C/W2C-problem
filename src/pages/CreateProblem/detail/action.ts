@@ -10,12 +10,16 @@ export namespace Action {
         dispatch: React.Dispatch<ActionType>,
         targetName: string,
         value: any,
+        index?: number,
+        choiceIdx?: number,
     ) {
         dispatch({
             type: 'EDIT_FORM',
             payload: {
                 targetName,
                 value,
+                index,
+                choiceIdx,
             },
         })
     }
@@ -93,13 +97,13 @@ export namespace Action {
     ) {
         let optionContent: string[][] = []
         let optionName: string[] = []
-        let modelAnswer: string[] = []
+        let modelAnswer: number[] = []
 
         try {
             // JSON文字列を配列に変換
             optionContent = JSON.parse(cond.content) as string[][]
             optionName = JSON.parse(cond.option_name) as string[]
-            modelAnswer = JSON.parse(cond.model_answer) as string[]
+            modelAnswer = JSON.parse(cond.model_answer) as number[]
         } catch (error) {
             console.error('JSON parse error:', error)
             // パースに失敗した場合は空配列を使用
