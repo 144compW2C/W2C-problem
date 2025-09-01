@@ -34,6 +34,9 @@
             color: var(--textColor);
         }
     }
+    input[type="text"] {
+        border: 1px solid var(--textColor);
+    }
     .newCreateProblemTitle {
         align-items: center;
 
@@ -107,17 +110,24 @@
     }
     .selectProblemBox {
         .selectProblem {
-            > input {
-                width: 240px;
-                height: 32px;
-                border-radius: 8px;
-                padding-left: .5rem;
-                padding-right: .5rem;
+            .selectProblemTitle {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+
+                > input {
+                    width: 240px;
+                    height: 32px;
+                    border-radius: 8px;
+                    padding-left: .5rem;
+                    padding-right: .5rem;
+                }
             }
-            > div {
+            > .selectProblemChoices {
                 margin: 16px 0;
                 display: flex;
                 align-items: center;
+                flex-wrap: wrap;
                 gap: 24px;
 
                 > div {
@@ -143,11 +153,16 @@
 
         .answerWrap {
             display: flex;
+            flex-wrap: wrap;
             gap: 24px;
 
             > div {
                 display: flex;
                 flex-direction: column;
+
+                .notName {
+                    color: var(--textAlphaColor);
+                }
             }
         }
     }

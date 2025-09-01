@@ -40,6 +40,29 @@ export type ActionType =
       }
     // ==============================================
     | {
+          type: 'ADD_CHOICES'
+          payload: {
+              conIdx: number
+          }
+      }
+    | {
+          type: 'DELETE_CHOICES'
+          payload: {
+              conIdx: number
+              choIdx: number
+          }
+      }
+    | {
+          type: 'ADD_SELECT_PROBLEM'
+      }
+    | {
+          type: 'DELETE_SELECT_PROBLEM'
+          payload: {
+              conIdx: number
+          }
+      }
+    // ==============================================
+    | {
           type: 'NEXT_PAGE'
       }
     | {
@@ -185,6 +208,44 @@ export function reducer(state: State, action: ActionType): State {
                 optionContent: action.payload.optionContent,
                 optionName: action.payload.optionName,
                 modelAnswer: action.payload.modelAnswer,
+            }
+        // ==============================================
+        case 'ADD_CHOICES':
+            return {
+                ...state,
+                optionContent: state.optionContent.map((row, idx) =>
+                    idx !== action.payload.conIdx ? row : [...row, ''],
+                ),
+            }
+        case 'DELETE_CHOICES':
+            return {
+                ...state,
+                optionContent: state.optionContent.map((row, rIdx) =>
+                    rIdx !== action.payload.conIdx
+                        ? row
+                        : row.filter(
+                              (_, cIdx) => cIdx !== action.payload.choIdx,
+                          ),
+                ),
+            }
+        case 'ADD_SELECT_PROBLEM':
+            return {
+                ...state,
+                optionName: [...state.optionName, ''],
+                optionContent: [...state.optionContent, ['', '']],
+            }
+        case 'DELETE_SELECT_PROBLEM':
+            return {
+                ...state,
+                optionName: state.optionName.filter(
+                    (_, idx) => idx !== action.payload.conIdx,
+                ),
+                optionContent: state.optionContent.filter(
+                    (_, idx) => idx !== action.payload.conIdx,
+                ),
+                modelAnswer: state.modelAnswer.filter(
+                    (_, idx) => idx !== action.payload.conIdx,
+                ),
             }
         // ==============================================
         case 'NEXT_PAGE':

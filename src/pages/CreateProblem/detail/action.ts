@@ -122,6 +122,51 @@ export namespace Action {
         })
     }
 
+    export function addChoices(
+        dispatch: React.Dispatch<ActionType>,
+        cond: {
+            conIdx: number
+        },
+    ) {
+        dispatch({
+            type: 'ADD_CHOICES',
+            payload: {
+                conIdx: cond.conIdx,
+            },
+        })
+    }
+    export function deleteChoices(
+        dispatch: React.Dispatch<ActionType>,
+        cond: {
+            conIdx: number
+            choIdx: number
+        },
+    ) {
+        dispatch({
+            type: 'DELETE_CHOICES',
+            payload: {
+                conIdx: cond.conIdx,
+                choIdx: cond.choIdx,
+            },
+        })
+    }
+    export function addSelectProblem(dispatch: React.Dispatch<ActionType>) {
+        dispatch({ type: 'ADD_SELECT_PROBLEM' })
+    }
+    export function deleteSelectProblem(
+        dispatch: React.Dispatch<ActionType>,
+        cond: {
+            conIdx: number
+        },
+    ) {
+        dispatch({
+            type: 'DELETE_SELECT_PROBLEM',
+            payload: {
+                conIdx: cond.conIdx,
+            },
+        })
+    }
+
     export function nextPage(dispatch: React.Dispatch<ActionType>) {
         dispatch({ type: 'NEXT_PAGE' })
     }

@@ -255,62 +255,93 @@ export default function CreateProblemDetail() {
                                         key={conIdx}
                                         className={styles.selectProblem}
                                     >
-                                        <input
-                                            type="text"
-                                            value={state.optionName[conIdx]}
-                                            onChange={(e) => {
-                                                Action.editForm(
-                                                    dispatch,
-                                                    'newCreate.problem.optionName',
-                                                    e.target.value,
-                                                    conIdx,
-                                                )
-                                            }}
-                                        />
-                                        <div>
+                                        <div
+                                            className={
+                                                styles.selectProblemTitle
+                                            }
+                                        >
+                                            {conIdx >= 1 && (
+                                                <ChoiceRemoveBtn
+                                                    void={() => {
+                                                        Action.deleteSelectProblem(
+                                                            dispatch,
+                                                            {
+                                                                conIdx,
+                                                            },
+                                                        )
+                                                    }}
+                                                />
+                                            )}
+                                            <input
+                                                type="text"
+                                                value={state.optionName[conIdx]}
+                                                onChange={(e) => {
+                                                    Action.editForm(
+                                                        dispatch,
+                                                        'newCreate.problem.optionName',
+                                                        e.target.value,
+                                                        conIdx,
+                                                    )
+                                                }}
+                                            />
+                                        </div>
+                                        <div
+                                            className={
+                                                styles.selectProblemChoices
+                                            }
+                                        >
                                             {con.map((choice, choIdx) => (
-                                                <>
-                                                    <div key={choIdx}>
-                                                        {choIdx >= 2 && (
-                                                            <ChoiceRemoveBtn
-                                                                void={() => {
-                                                                    console.log(
-                                                                        'aaa',
-                                                                    )
-                                                                }}
-                                                            />
-                                                        )}
-                                                        <label htmlFor="">
-                                                            {choIdx + 1}.
-                                                        </label>
-                                                        <input
-                                                            type="text"
-                                                            value={choice}
-                                                            onChange={(e) => {
-                                                                Action.editForm(
+                                                <div key={choIdx}>
+                                                    {choIdx >= 2 && (
+                                                        <ChoiceRemoveBtn
+                                                            void={() => {
+                                                                Action.deleteChoices(
                                                                     dispatch,
-                                                                    'newCreate.problem.choice',
-                                                                    e.target
-                                                                        .value,
-                                                                    conIdx,
-                                                                    choIdx,
+                                                                    {
+                                                                        conIdx,
+                                                                        choIdx,
+                                                                    },
                                                                 )
                                                             }}
                                                         />
-                                                    </div>
-                                                    {choIdx ===
-                                                        con.length - 1 && (
-                                                        <ChoiceAddBtn
-                                                            void={() => {}}
-                                                        />
                                                     )}
-                                                </>
+                                                    <label htmlFor="">
+                                                        {choIdx + 1}.
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        value={choice}
+                                                        onChange={(e) => {
+                                                            Action.editForm(
+                                                                dispatch,
+                                                                'newCreate.problem.choice',
+                                                                e.target.value,
+                                                                conIdx,
+                                                                choIdx,
+                                                            )
+                                                        }}
+                                                    />
+                                                </div>
                                             ))}
+                                            <ChoiceAddBtn
+                                                void={() => {
+                                                    Action.addChoices(
+                                                        dispatch,
+                                                        {
+                                                            conIdx,
+                                                        },
+                                                    )
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                 ))}
                                 <div className={styles.columnAddBtn}>
-                                    <ChoiceAddBtn void={() => {}} />
+                                    <ChoiceAddBtn
+                                        void={() => {
+                                            Action.addSelectProblem(dispatch)
+                                        }}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -319,9 +350,13 @@ export default function CreateProblemDetail() {
                             <div className={styles.answerWrap}>
                                 {state.optionName.map((name, index) => (
                                     <div key={index}>
-                                        <label htmlFor="selectAnswer">
-                                            {name}
-                                        </label>
+                                        {name !== '' ? (
+                                            <label>{name}</label>
+                                        ) : (
+                                            <label className={styles.notName}>
+                                                未入力
+                                            </label>
+                                        )}
                                         <Dropdown
                                             value={state.modelAnswer[index]}
                                             placeholder="答えを選択"
