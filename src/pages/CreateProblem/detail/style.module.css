@@ -25,7 +25,7 @@
     flex-direction: column;
     gap: 24px;
 
-    div {
+    > div {
         display: flex;
         gap: 32px;
 
@@ -34,9 +34,11 @@
             color: var(--textColor);
         }
     }
+    input[type="text"] {
+        border: 1px solid var(--textColor);
+    }
     .newCreateProblemTitle {
         align-items: center;
-        justify-content: space-between;
 
         input {
             width: 85%;
@@ -47,7 +49,6 @@
         }
     }
     .newCreateProblemMainText {
-        justify-content: space-between;
 
         textarea {
             width: 85%;
@@ -57,15 +58,25 @@
         }
     }
     .newCreateProblemAddImg {
-
+        /* 参考画像 */
     }
     .newCreateProblemGenre {
+        align-items: center;
         /* ドロップダウンメニュー作成 */
+    }
+    .dropdown {
+        padding: .5rem 0;
+        text-align: center;
+
+        span {
+            margin-left: .5rem;
+        }
     }
     .newCreateProblemLevel {
         align-items: center;
 
         .levelRadioWrap {
+            display: flex;
             gap: 24px;
 
             div {
@@ -77,11 +88,87 @@
         align-items: center;
 
         .descriptionRadioWrap {
+            display: flex;
             gap: 24px;
 
             div {
                 gap: 8px;
             }
         }
+    }
+
+    .newCreateProblemZip {
+    align-items: center;
+
+        input[type="text"] {
+            width: 20%;
+            height: 32px;
+            border-radius: 8px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    }
+    .selectProblemBox {
+        .selectProblem {
+            .selectProblemTitle {
+                display: flex;
+                align-items: center;
+                gap: 4px;
+
+                > input {
+                    width: 240px;
+                    height: 32px;
+                    border-radius: 8px;
+                    padding-left: .5rem;
+                    padding-right: .5rem;
+                }
+            }
+            > .selectProblemChoices {
+                margin: 16px 0;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 24px;
+
+                > div {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+
+                    input[type="text"] {
+                        width: 160px;
+                        height: 32px;
+                        border-radius: 8px;
+                        padding-left: .5rem;
+                        padding-right: .5rem;
+                    }
+                }
+            }
+        }
+        .columnAddBtn {
+            margin: 4px 0 0 8px;
+        }
+    }
+    .selectAnswer {
+
+        .answerWrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+
+            > div {
+                display: flex;
+                flex-direction: column;
+
+                .notName {
+                    color: var(--textAlphaColor);
+                }
+            }
+        }
+    }
+
+    .append {
+        justify-content: center;
+        margin: 32px 0 72px;
     }
 }

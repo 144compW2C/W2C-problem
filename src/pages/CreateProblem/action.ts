@@ -2,6 +2,8 @@ import { ActionType } from './reducer'
 import { NumberUtils } from '@/utils/number_utils'
 import { CreateProblemApi } from '@/models/ApiType/CreateProblem/type'
 import { testData } from '@/models/entity/fmt/CreateProblemFmt0001'
+import { tagsTestDate } from '@/models/entity/Tags'
+import { statusTestDate } from '@/models/entity/Status'
 
 export namespace Action {
     export async function findCreateProblem(
@@ -45,6 +47,8 @@ export namespace Action {
             const CreateProblemResult: CreateProblemApi.GET.Response = {
                 list: testData.slice(cond.offset, cond.limit),
                 total: testData.length,
+                tags: tagsTestDate,
+                status: statusTestDate,
             }
             /* ここのまでがテスト */
 
@@ -53,6 +57,8 @@ export namespace Action {
                 payload: {
                     createProblemList: CreateProblemResult.list,
                     createProblemTotal: CreateProblemResult.total,
+                    tags: CreateProblemResult.tags,
+                    status: CreateProblemResult.status,
                 },
             })
         } catch (e) {
