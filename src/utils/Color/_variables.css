@@ -1,11 +1,12 @@
 :root {
     --mouseColor: #86A0A6;  /* ネズミ色 */
-    --lightMouseColor: #86A0A6;  /* 薄ネズミ色 */
+    --lightMouseColor: #A4BFC5;  /* 薄ネズミ色 */
     --whiteAlpha70: #ffffffB3;  /* 不透明度70%の白色 */
     --textColor: #010418;  /* 文字の色 */
     --textAlphaColor: #818181;  /* 薄い文字の色 */
     --gray: #E6E6E6;  /* 灰色 */
     --grayText: #8C8C8C;  /* 灰色のテキスト */
+    --whiteText: #FFFFFF;  /* 白色のテキスト */
     --red: #EC6F7C;  /* 赤色 */
     --bgHover: #D9D9D9;  /* ホバーした時の背景 */
 }
