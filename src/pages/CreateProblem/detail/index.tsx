@@ -457,6 +457,12 @@ export default function CreateProblemDetail() {
                         optionName={state.optionName}
                         modelAnswer={state.modelAnswer}
                     />
+                    <div className={styles.backPage}>
+                        <Button
+                            label="問題作成に戻る"
+                            onClick={() => Action.backPage(dispatch)}
+                        />
+                    </div>
                 </>
             )}
         </>

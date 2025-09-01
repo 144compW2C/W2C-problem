@@ -172,3 +172,10 @@
         margin: 32px 0 72px;
     }
 }
+
+.backPage {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
