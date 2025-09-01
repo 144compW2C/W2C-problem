@@ -8,6 +8,7 @@ import { defaultState, reducer } from './reducer'
 import { Dropdown } from 'primereact/dropdown'
 import ChoiceRemoveBtn from '@/components/Button/ChoiceRemoveBtn/ChoiceRemoveBtn'
 import ChoiceAddBtn from '@/components/Button/ChoiceAddBtn/ChoiceAddBtn'
+import Problem from '@/components/Problem'
 
 export default function CreateProblemDetail() {
     const [state, dispatch] = useReducer(reducer, undefined, defaultState)
@@ -55,345 +56,409 @@ export default function CreateProblemDetail() {
 
     return (
         <>
-            <div className={styles.title}>
-                <h2 className={styles.h2}>問題作成</h2>
-                <div className={styles.save}>
-                    <Button label="下書き保存" />
-                </div>
-            </div>
-            <div className={styles.newCreateProblemWrap}>
-                <div className={styles.newCreateProblemTitle}>
-                    <p>タイトル</p>
-                    <input
-                        type="text"
-                        id="title"
-                        value={state.createProblemDetail.title}
-                        onChange={(e) => {
-                            Action.editForm(
-                                dispatch,
-                                'newCreate.problem.title',
-                                e.target.value,
-                            )
-                        }}
-                    />
-                </div>
-                <div className={styles.newCreateProblemMainText}>
-                    <p>問題本文</p>
-                    <textarea
-                        name="mainText"
-                        id="mainText"
-                        value={state.createProblemDetail.body}
-                        onChange={(e) => {
-                            Action.editForm(
-                                dispatch,
-                                'newCreate.problem.body',
-                                e.target.value,
-                            )
-                        }}
-                    ></textarea>
-                </div>
-                <div className={styles.newCreateProblemAddImg}>
-                    <p>画像追加</p>
-                    <input type="file" id="addImg" />
-                </div>
-                <div className={styles.newCreateProblemGenre}>
-                    <p>ジャンル</p>
-                    <Dropdown
-                        value={state.createProblemDetail.fk_tags}
-                        placeholder="タグを選択"
-                        id="tags"
-                        className={styles.dropdown}
-                        options={state.tags}
-                        optionLabel="tag_name"
-                        optionValue="id"
-                        onChange={(e) => {
-                            Action.editForm(
-                                dispatch,
-                                'newCreate.problem.tags',
-                                e.target.value,
-                            )
-                        }}
-                    />
-                </div>
-                <div className={styles.newCreateProblemLevel}>
-                    <p>レベル</p>
-                    <div className={styles.levelRadioWrap}>
-                        <div>
-                            <input
-                                type="radio"
-                                id="one"
-                                name="level"
-                                value={1}
-                                checked={state.createProblemDetail.level === 1}
-                                onChange={(e) => {
-                                    Action.editForm(
-                                        dispatch,
-                                        'newCreate.problem.level',
-                                        Number(e.target.value),
-                                    )
-                                }}
+            {state.pageNum === 0 ? (
+                <>
+                    <div className={styles.title}>
+                        <h2 className={styles.h2}>問題作成</h2>
+                        <div className={styles.save}>
+                            <Button
+                                label="プレビューを表示"
+                                onClick={() => Action.nextPage(dispatch)}
                             />
-                            <label htmlFor="one">1</label>
-                        </div>
-                        <div>
-                            <input
-                                type="radio"
-                                id="two"
-                                name="level"
-                                value={2}
-                                checked={state.createProblemDetail.level === 2}
-                                onChange={(e) => {
-                                    Action.editForm(
-                                        dispatch,
-                                        'newCreate.problem.level',
-                                        Number(e.target.value),
-                                    )
-                                }}
-                            />
-                            <label htmlFor="two">2</label>
-                        </div>
-                        <div>
-                            <input
-                                type="radio"
-                                id="three"
-                                name="level"
-                                value={3}
-                                checked={state.createProblemDetail.level === 3}
-                                onChange={(e) => {
-                                    Action.editForm(
-                                        dispatch,
-                                        'newCreate.problem.level',
-                                        Number(e.target.value),
-                                    )
-                                }}
-                            />
-                            <label htmlFor="three">3</label>
                         </div>
                     </div>
-                </div>
-                <div className={styles.newCreateProblemFormat}>
-                    <p>出題形式</p>
-                    <div className={styles.descriptionRadioWrap}>
-                        <div>
+                    <div className={styles.newCreateProblemWrap}>
+                        <div className={styles.newCreateProblemTitle}>
+                            <p>タイトル</p>
                             <input
-                                type="radio"
-                                id="description"
-                                name="format"
-                                value={'true'}
-                                checked={
-                                    state.createProblemDetail
-                                        .is_multiple_choice === true
-                                }
+                                type="text"
+                                id="title"
+                                value={state.createProblemDetail.title}
                                 onChange={(e) => {
                                     Action.editForm(
                                         dispatch,
-                                        'newCreate.problem.description',
-                                        e.target.value === 'true',
+                                        'newCreate.problem.title',
+                                        e.target.value,
                                     )
                                 }}
                             />
-                            <label htmlFor="description">記述式</label>
                         </div>
-                        <div>
-                            <input
-                                type="radio"
-                                id="choice"
-                                name="format"
-                                value={'false'}
-                                checked={
-                                    state.createProblemDetail
-                                        .is_multiple_choice === false
-                                }
-                                onChange={(e) => {
-                                    Action.editForm(
-                                        dispatch,
-                                        'newCreate.problem.description',
-                                        e.target.value === 'true',
-                                    )
-                                }}
-                            />
-                            <label htmlFor="choice">選択式</label>
-                        </div>
-                    </div>
-                </div>
-                {state.createProblemDetail.is_multiple_choice ? (
-                    <>
                         <div className={styles.newCreateProblemMainText}>
-                            <p>模範解答</p>
+                            <p>問題本文</p>
                             <textarea
-                                value={state.createProblemDetail.model_answer}
+                                name="mainText"
+                                id="mainText"
+                                value={state.createProblemDetail.body}
                                 onChange={(e) => {
                                     Action.editForm(
                                         dispatch,
-                                        'newCreate.problem.model_answer',
+                                        'newCreate.problem.body',
                                         e.target.value,
                                     )
                                 }}
                             ></textarea>
                         </div>
-                        <div className={styles.newCreateProblemZip}>
-                            <p>初期zip</p>
-                            <input
-                                type="text"
-                                id="zipText"
-                                placeholder="ファイルの名前"
+                        <div className={styles.newCreateProblemAddImg}>
+                            <p>画像追加</p>
+                            <input type="file" id="addImg" />
+                        </div>
+                        <div className={styles.newCreateProblemGenre}>
+                            <p>ジャンル</p>
+                            <Dropdown
+                                value={state.createProblemDetail.fk_tags}
+                                placeholder="タグを選択"
+                                id="tags"
+                                className={styles.dropdown}
+                                options={state.tags}
+                                optionLabel="tag_name"
+                                optionValue="id"
                                 onChange={(e) => {
-                                    /* 初期zip取得のAPIを叩くアクションを指定 */
-                                    // Action.editForm(dispatch, 'newCreate.problem.title', e.target.value)
+                                    Action.editForm(
+                                        dispatch,
+                                        'newCreate.problem.tags',
+                                        e.target.value,
+                                    )
                                 }}
                             />
-                            <input type="file" id="zipFile" />
                         </div>
-                    </>
-                ) : (
-                    <>
-                        <div className={styles.selectProblemBox}>
-                            <p>選択問題</p>
-                            <div>
-                                {state.optionContent.map((con, conIdx) => (
-                                    <div
-                                        key={conIdx}
-                                        className={styles.selectProblem}
-                                    >
-                                        <div
-                                            className={
-                                                styles.selectProblemTitle
-                                            }
-                                        >
-                                            {conIdx >= 1 && (
-                                                <ChoiceRemoveBtn
-                                                    void={() => {
-                                                        Action.deleteSelectProblem(
-                                                            dispatch,
-                                                            {
-                                                                conIdx,
-                                                            },
-                                                        )
-                                                    }}
-                                                />
-                                            )}
-                                            <input
-                                                type="text"
-                                                value={state.optionName[conIdx]}
-                                                onChange={(e) => {
-                                                    Action.editForm(
-                                                        dispatch,
-                                                        'newCreate.problem.optionName',
-                                                        e.target.value,
-                                                        conIdx,
-                                                    )
-                                                }}
-                                            />
-                                        </div>
-                                        <div
-                                            className={
-                                                styles.selectProblemChoices
-                                            }
-                                        >
-                                            {con.map((choice, choIdx) => (
-                                                <div key={choIdx}>
-                                                    {choIdx >= 2 && (
-                                                        <ChoiceRemoveBtn
+                        <div className={styles.newCreateProblemLevel}>
+                            <p>レベル</p>
+                            <div className={styles.levelRadioWrap}>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="one"
+                                        name="level"
+                                        value={1}
+                                        checked={
+                                            state.createProblemDetail.level ===
+                                            1
+                                        }
+                                        onChange={(e) => {
+                                            Action.editForm(
+                                                dispatch,
+                                                'newCreate.problem.level',
+                                                Number(e.target.value),
+                                            )
+                                        }}
+                                    />
+                                    <label htmlFor="one">1</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="two"
+                                        name="level"
+                                        value={2}
+                                        checked={
+                                            state.createProblemDetail.level ===
+                                            2
+                                        }
+                                        onChange={(e) => {
+                                            Action.editForm(
+                                                dispatch,
+                                                'newCreate.problem.level',
+                                                Number(e.target.value),
+                                            )
+                                        }}
+                                    />
+                                    <label htmlFor="two">2</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="three"
+                                        name="level"
+                                        value={3}
+                                        checked={
+                                            state.createProblemDetail.level ===
+                                            3
+                                        }
+                                        onChange={(e) => {
+                                            Action.editForm(
+                                                dispatch,
+                                                'newCreate.problem.level',
+                                                Number(e.target.value),
+                                            )
+                                        }}
+                                    />
+                                    <label htmlFor="three">3</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.newCreateProblemFormat}>
+                            <p>出題形式</p>
+                            <div className={styles.descriptionRadioWrap}>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="description"
+                                        name="format"
+                                        value={'true'}
+                                        checked={
+                                            state.createProblemDetail
+                                                .is_multiple_choice === true
+                                        }
+                                        onChange={(e) => {
+                                            Action.editForm(
+                                                dispatch,
+                                                'newCreate.problem.description',
+                                                e.target.value === 'true',
+                                            )
+                                        }}
+                                    />
+                                    <label htmlFor="description">記述式</label>
+                                </div>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="choice"
+                                        name="format"
+                                        value={'false'}
+                                        checked={
+                                            state.createProblemDetail
+                                                .is_multiple_choice === false
+                                        }
+                                        onChange={(e) => {
+                                            Action.editForm(
+                                                dispatch,
+                                                'newCreate.problem.description',
+                                                e.target.value === 'true',
+                                            )
+                                        }}
+                                    />
+                                    <label htmlFor="choice">選択式</label>
+                                </div>
+                            </div>
+                        </div>
+                        {state.createProblemDetail.is_multiple_choice ? (
+                            <>
+                                <div
+                                    className={styles.newCreateProblemMainText}
+                                >
+                                    <p>模範解答</p>
+                                    <textarea
+                                        value={
+                                            state.createProblemDetail
+                                                .model_answer
+                                        }
+                                        onChange={(e) => {
+                                            Action.editForm(
+                                                dispatch,
+                                                'newCreate.problem.model_answer',
+                                                e.target.value,
+                                            )
+                                        }}
+                                    ></textarea>
+                                </div>
+                                <div className={styles.newCreateProblemZip}>
+                                    <p>初期zip</p>
+                                    <input
+                                        type="text"
+                                        id="zipText"
+                                        placeholder="ファイルの名前"
+                                        onChange={(e) => {
+                                            /* 初期zip取得のAPIを叩くアクションを指定 */
+                                            // Action.editForm(dispatch, 'newCreate.problem.title', e.target.value)
+                                        }}
+                                    />
+                                    <input type="file" id="zipFile" />
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className={styles.selectProblemBox}>
+                                    <p>選択問題</p>
+                                    <div>
+                                        {state.optionContent.map(
+                                            (con, conIdx) => (
+                                                <div
+                                                    key={conIdx}
+                                                    className={
+                                                        styles.selectProblem
+                                                    }
+                                                >
+                                                    <div
+                                                        className={
+                                                            styles.selectProblemTitle
+                                                        }
+                                                    >
+                                                        {conIdx >= 1 && (
+                                                            <ChoiceRemoveBtn
+                                                                void={() => {
+                                                                    Action.deleteSelectProblem(
+                                                                        dispatch,
+                                                                        {
+                                                                            conIdx,
+                                                                        },
+                                                                    )
+                                                                }}
+                                                            />
+                                                        )}
+                                                        <input
+                                                            type="text"
+                                                            value={
+                                                                state
+                                                                    .optionName[
+                                                                    conIdx
+                                                                ]
+                                                            }
+                                                            onChange={(e) => {
+                                                                Action.editForm(
+                                                                    dispatch,
+                                                                    'newCreate.problem.optionName',
+                                                                    e.target
+                                                                        .value,
+                                                                    conIdx,
+                                                                )
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div
+                                                        className={
+                                                            styles.selectProblemChoices
+                                                        }
+                                                    >
+                                                        {con.map(
+                                                            (
+                                                                choice,
+                                                                choIdx,
+                                                            ) => (
+                                                                <div
+                                                                    key={choIdx}
+                                                                >
+                                                                    {choIdx >=
+                                                                        2 && (
+                                                                        <ChoiceRemoveBtn
+                                                                            void={() => {
+                                                                                Action.deleteChoices(
+                                                                                    dispatch,
+                                                                                    {
+                                                                                        conIdx,
+                                                                                        choIdx,
+                                                                                    },
+                                                                                )
+                                                                            }}
+                                                                        />
+                                                                    )}
+                                                                    <label htmlFor="">
+                                                                        {choIdx +
+                                                                            1}
+                                                                        .
+                                                                    </label>
+                                                                    <input
+                                                                        type="text"
+                                                                        value={
+                                                                            choice
+                                                                        }
+                                                                        onChange={(
+                                                                            e,
+                                                                        ) => {
+                                                                            Action.editForm(
+                                                                                dispatch,
+                                                                                'newCreate.problem.choice',
+                                                                                e
+                                                                                    .target
+                                                                                    .value,
+                                                                                conIdx,
+                                                                                choIdx,
+                                                                            )
+                                                                        }}
+                                                                    />
+                                                                </div>
+                                                            ),
+                                                        )}
+                                                        <ChoiceAddBtn
                                                             void={() => {
-                                                                Action.deleteChoices(
+                                                                Action.addChoices(
                                                                     dispatch,
                                                                     {
                                                                         conIdx,
-                                                                        choIdx,
                                                                     },
                                                                 )
                                                             }}
                                                         />
-                                                    )}
-                                                    <label htmlFor="">
-                                                        {choIdx + 1}.
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        value={choice}
-                                                        onChange={(e) => {
-                                                            Action.editForm(
-                                                                dispatch,
-                                                                'newCreate.problem.choice',
-                                                                e.target.value,
-                                                                conIdx,
-                                                                choIdx,
-                                                            )
-                                                        }}
-                                                    />
+                                                    </div>
                                                 </div>
-                                            ))}
+                                            ),
+                                        )}
+                                        <div className={styles.columnAddBtn}>
                                             <ChoiceAddBtn
                                                 void={() => {
-                                                    Action.addChoices(
+                                                    Action.addSelectProblem(
                                                         dispatch,
-                                                        {
-                                                            conIdx,
-                                                        },
                                                     )
                                                 }}
                                             />
                                         </div>
                                     </div>
-                                ))}
-                                <div className={styles.columnAddBtn}>
-                                    <ChoiceAddBtn
-                                        void={() => {
-                                            Action.addSelectProblem(dispatch)
-                                        }}
-                                    />
                                 </div>
-                            </div>
-                        </div>
-                        <div className={styles.selectAnswer}>
-                            <p>模範解答</p>
-                            <div className={styles.answerWrap}>
-                                {state.optionName.map((name, index) => (
-                                    <div key={index}>
-                                        {name !== '' ? (
-                                            <label>{name}</label>
-                                        ) : (
-                                            <label className={styles.notName}>
-                                                未入力
-                                            </label>
-                                        )}
-                                        <Dropdown
-                                            value={state.modelAnswer[index]}
-                                            placeholder="答えを選択"
-                                            id="selectAnswer"
-                                            className={styles.dropdown}
-                                            options={state.optionContent[
-                                                index
-                                            ].map((choice, index) => ({
-                                                label: choice,
-                                                id: index,
-                                            }))}
-                                            optionLabel="label"
-                                            optionValue="id"
-                                            onChange={(e) => {
-                                                /* 模範解答取得のAPIを叩くアクションを指定 */
-                                                Action.editForm(
-                                                    dispatch,
-                                                    'newCreate.problem.selectAnswer',
-                                                    e.target.value,
-                                                    index,
-                                                )
-                                            }}
-                                        />
+                                <div className={styles.selectAnswer}>
+                                    <p>模範解答</p>
+                                    <div className={styles.answerWrap}>
+                                        {state.optionName.map((name, index) => (
+                                            <div key={index}>
+                                                {name !== '' ? (
+                                                    <label>{name}</label>
+                                                ) : (
+                                                    <label
+                                                        className={
+                                                            styles.notName
+                                                        }
+                                                    >
+                                                        未入力
+                                                    </label>
+                                                )}
+                                                <Dropdown
+                                                    value={
+                                                        state.modelAnswer[index]
+                                                    }
+                                                    placeholder="答えを選択"
+                                                    id="selectAnswer"
+                                                    className={styles.dropdown}
+                                                    options={state.optionContent[
+                                                        index
+                                                    ].map((choice, index) => ({
+                                                        label: choice,
+                                                        id: index,
+                                                    }))}
+                                                    optionLabel="label"
+                                                    optionValue="id"
+                                                    onChange={(e) => {
+                                                        /* 模範解答取得のAPIを叩くアクションを指定 */
+                                                        Action.editForm(
+                                                            dispatch,
+                                                            'newCreate.problem.selectAnswer',
+                                                            e.target.value,
+                                                            index,
+                                                        )
+                                                    }}
+                                                />
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                        </div>
-                    </>
-                )}
+                                </div>
+                            </>
+                        )}
 
-                <div className={styles.append}>
-                    <Button
-                        label="答えを入力"
-                        onClick={() => Action.nextPage(dispatch)}
+                        <div className={styles.append}>
+                            <Button label="下書き保存" />
+                            <Button label="申請" />
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <Problem
+                        Problem={state.createProblemDetail}
+                        tags={state.tags}
+                        option={state.option}
+                        optionContent={state.optionContent}
+                        optionName={state.optionName}
+                        modelAnswer={state.modelAnswer}
                     />
-                </div>
-            </div>
+                </>
+            )}
         </>
     )
 }
