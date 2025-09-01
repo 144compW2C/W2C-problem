@@ -4,33 +4,40 @@ import iconImg from '../../assets/icon.jpg'
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-export default function Header() {
+type Type = {
+    void: () => void
+    state: boolean
+}
+
+export default function Header(props: Type) {
     const [isOpen, setIsOpen] = useState(false)
     const toggleHamburger = () => {
         setIsOpen(!isOpen)
     }
     const location = useLocation()
     return (
-        <header>
+        <header className={styles.headerWrap}>
             <div className={styles.header}>
-                <img
-                    src={hamburgerIcon}
-                    className={styles.hamburger}
-                    alt="ハンバーガー"
-                    width={30}
-                    height={30}
-                    onClick={toggleHamburger}
-                />
-                <div className={styles.figure}>
+                <div>
                     <img
-                        src={iconImg}
-                        className={styles.icon}
-                        alt="アイコン画像"
+                        src={hamburgerIcon}
+                        className={styles.hamburger}
+                        alt="ハンバーガー"
+                        width={30}
+                        height={30}
+                        onClick={props.void}
                     />
+                    <div className={styles.figure}>
+                        <img
+                            src={iconImg}
+                            className={styles.icon}
+                            alt="アイコン画像"
+                        />
+                    </div>
                 </div>
             </div>
             <div
-                className={`${styles.nav} ${isOpen ? styles.hamburgerOpen : ''}`}
+                className={`${styles.nav} ${props.state ? styles.hamburgerOpen : ''}`}
             >
                 <nav>
                     <ul>
@@ -45,7 +52,7 @@ export default function Header() {
                         <Link
                             to={'/problem'}
                             className={
-                                location.pathname === '/problem'
+                                location.pathname.startsWith('/problem')
                                     ? styles.active
                                     : ''
                             }
@@ -55,7 +62,7 @@ export default function Header() {
                         <Link
                             to={'/createProblem'}
                             className={
-                                location.pathname === '/createProblem'
+                                location.pathname.startsWith('/createProblem')
                                     ? styles.active
                                     : ''
                             }
@@ -65,7 +72,9 @@ export default function Header() {
                         <Link
                             to={'#'}
                             className={
-                                location.pathname === '#' ? styles.active : ''
+                                location.pathname.startsWith('#')
+                                    ? styles.active
+                                    : ''
                             }
                         >
                             <li>運営管理</li>
