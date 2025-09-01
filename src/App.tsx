@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import {
     createBrowserRouter,
@@ -16,10 +16,21 @@ import CreateProblemDetail from './pages/CreateProblem/detail'
 import Header from './components/Header/Header'
 
 const MainLayout: React.FC = () => {
+    const [state, setState] = useState<boolean>(true)
+
     return (
         <main>
-            <Header />
-            <Outlet />
+            <Header void={() => setState(!state)} state={state} />
+            <div
+                style={{
+                    marginLeft: state ? '240px' : '0px',
+                    transition: 'all',
+                    transitionDuration: '.4s',
+                    paddingTop: '50px',
+                }}
+            >
+                <Outlet />
+            </div>
         </main>
     )
 }

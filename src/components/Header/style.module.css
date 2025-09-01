@@ -1,11 +1,18 @@
-
+.headerWrap {
+    position: relative;
+    width: 100%;
+}
 .header{
     position: fixed;
+    width: 100%;
     background: #86A0A6;
     padding: 10px 25px;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
+    
+    > div {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
     .figure {
         width: 30px;       
         height: 30px;      
