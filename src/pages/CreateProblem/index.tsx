@@ -6,6 +6,7 @@ import { useGenre } from '@/hooks/useGenre'
 import { Action } from './action'
 import { defaultState, reducer } from './reducer'
 import { NumberUtils } from '@/utils/number_utils'
+import Genre from '@/components/Genre/Genre'
 
 export default function CreateProblem() {
     const [state, dispatch] = useReducer(reducer, undefined, defaultState)
@@ -72,18 +73,15 @@ export default function CreateProblem() {
                                         <p>{item.title}</p>
                                     </td>
                                     <td>
-                                        <p
-                                            style={{
-                                                background: useGenre(item.tags),
-                                            }}
-                                            className={styles.tags}
-                                        >
-                                            {state.tags.map((tag) =>
-                                                tag.id === item.tags
-                                                    ? tag.tag_name
-                                                    : '',
-                                            )}
-                                        </p>
+                                        {state.tags.map((tag) =>
+                                            tag.id === item.tags ? (
+                                                <Genre
+                                                    genreName={tag.tag_name}
+                                                />
+                                            ) : (
+                                                ''
+                                            ),
+                                        )}
                                     </td>
                                     <td>
                                         <p>
