@@ -456,6 +456,13 @@ export default function CreateProblemDetail() {
                         optionContent={state.optionContent}
                         optionName={state.optionName}
                         modelAnswer={state.modelAnswer}
+                        pageNum={state.pageNum}
+                        onClickNextPage={() => {
+                            Action.nextPage(dispatch)
+                        }}
+                        onClickBackPage={() => {
+                            Action.backPage(dispatch)
+                        }}
                     />
                     <div className={styles.backPage}>
                         <Button

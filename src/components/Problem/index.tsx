@@ -4,6 +4,7 @@ import { TagsVO } from '@/models/entity/Tags'
 import styles from './styles.module.css'
 import Genre from '../Genre/Genre'
 import { Button } from '@/stories/Button'
+import { useState } from 'react'
 
 type Type = {
     Problem: ProblemVO.Type
@@ -12,9 +13,28 @@ type Type = {
     optionContent: string[][]
     optionName: string[]
     modelAnswer: number[]
+    pageNum: number
+    onClickNextPage: () => void
+    onClickBackPage: () => void
 }
 
 export default function Problem(props: Type) {
+    const [state, setState] = useState<number[]>([])
+
+    const handleAnswerChange = (
+        questionIndex: number,
+        selectedValue: number,
+    ) => {
+        setState((prevState) => {
+            const newState = [...prevState]
+            newState[questionIndex] = selectedValue
+            return newState
+        })
+    }
+
+    console.log('解答欄:' + state)
+    console.log('解答欄:' + props)
+
     return (
         <>
             <div className={styles.title}>
@@ -24,7 +44,9 @@ export default function Problem(props: Type) {
                 <div className={styles.problemGenre}>
                     {props.tags.map((item) =>
                         item.id === props.Problem.fk_tags ? (
-                            <Genre genreName={item.tag_name} />
+                            <div key={item.id}>
+                                <Genre genreName={item.tag_name} />
+                            </div>
                         ) : (
                             ''
                         ),
@@ -36,42 +58,147 @@ export default function Problem(props: Type) {
                 <div className={styles.problem}>
                     <h3>{props.Problem.body}</h3>
                 </div>
-                {props.Problem.is_multiple_choice ? (
-                    <></>
-                ) : (
-                    <div className={styles.answerColumnWrap}>
-                        <p>解答欄</p>
-                        {props.optionName.map((item, idx) => (
-                            <div key={idx}>
-                                <p>{item}</p>
-                                {props.optionContent.map((row, rIdx) =>
-                                    rIdx !== idx ? (
-                                        ''
-                                    ) : (
-                                        <div className={styles.choicesWrap}>
-                                            {row.map((col, cIdx) => (
-                                                <div key={cIdx}>
-                                                    <label>
-                                                        <input
-                                                            type="radio"
-                                                            name={item}
-                                                        />
-                                                        {col}
-                                                    </label>
+                {props.pageNum === 1 && (
+                    <>
+                        {props.Problem.is_multiple_choice ? (
+                            <></>
+                        ) : (
+                            <div className={styles.answerColumnWrap}>
+                                <p>解答欄</p>
+                                {props.optionName.map((item, idx) => (
+                                    <div key={idx}>
+                                        <p>{item}</p>
+                                        {props.optionContent.map((row, rIdx) =>
+                                            rIdx !== idx ? (
+                                                ''
+                                            ) : (
+                                                <div
+                                                    className={
+                                                        styles.choicesWrap
+                                                    }
+                                                    key={rIdx}
+                                                >
+                                                    {row.map((col, cIdx) => (
+                                                        <div key={cIdx}>
+                                                            <label>
+                                                                <input
+                                                                    type="radio"
+                                                                    name={item}
+                                                                    value={cIdx}
+                                                                    checked={
+                                                                        state[
+                                                                            idx
+                                                                        ] ===
+                                                                        cIdx
+                                                                    }
+                                                                    onChange={(
+                                                                        e,
+                                                                    ) =>
+                                                                        handleAnswerChange(
+                                                                            idx,
+                                                                            Number(
+                                                                                e
+                                                                                    .target
+                                                                                    .value,
+                                                                            ),
+                                                                        )
+                                                                    }
+                                                                />
+                                                                {col}
+                                                            </label>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
-                                    ),
-                                )}
+                                            ),
+                                        )}
+                                    </div>
+                                ))}
+                                <div className={styles.problemBtnWrap}>
+                                    <Button
+                                        label="解答"
+                                        onClick={() => props.onClickNextPage()}
+                                    />
+                                </div>
                             </div>
-                        ))}
-                        <div className={styles.problemBtnWrap}>
-                            <Button
-                                label="解答"
-                                // onClick={() => Action.backPage(dispatch)}
-                            />
+                        )}
+                    </>
+                )}
+                {props.pageNum === 2 && (
+                    <>
+                        <div className={styles.answerColumnWrap}>
+                            <p>解答</p>
+                            {props.optionName.map((item, idx) => (
+                                <div key={idx}>
+                                    <p>{item}</p>
+                                    {props.optionContent.map((row, rIdx) =>
+                                        rIdx !== idx ? (
+                                            ''
+                                        ) : (
+                                            <div key={rIdx}>
+                                                {row.map((col, cIdx) =>
+                                                    cIdx === state[idx] ? (
+                                                        <>
+                                                            <div
+                                                                key={cIdx}
+                                                                className={
+                                                                    styles.answer
+                                                                }
+                                                            >
+                                                                {state[idx] ===
+                                                                props
+                                                                    .modelAnswer[
+                                                                    idx
+                                                                ] ? (
+                                                                    <p>⭕️</p>
+                                                                ) : (
+                                                                    <p>❌</p>
+                                                                )}
+                                                                <p>{col}</p>
+                                                            </div>
+                                                            {state[idx] !==
+                                                                props
+                                                                    .modelAnswer[
+                                                                    idx
+                                                                ] && (
+                                                                <div>
+                                                                    <p>
+                                                                        正解：
+                                                                        {
+                                                                            props
+                                                                                .optionContent[
+                                                                                idx
+                                                                            ][
+                                                                                props
+                                                                                    .modelAnswer[
+                                                                                    idx
+                                                                                ]
+                                                                            ]
+                                                                        }
+                                                                    </p>
+                                                                </div>
+                                                            )}
+                                                        </>
+                                                    ) : null,
+                                                )}
+                                            </div>
+                                        ),
+                                    )}
+                                </div>
+                            ))}
+                            <div className={styles.problemBtnWrap}>
+                                <Button
+                                    label="問題へ戻る"
+                                    onClick={() => props.onClickBackPage()}
+                                    backgroundColor="#FF7253"
+                                    color="white"
+                                />
+                                <Button
+                                    label="次の問題へ"
+                                    // onClick={() => props.onClick()}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    </>
                 )}
             </div>
         </>
