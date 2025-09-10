@@ -9,11 +9,12 @@ import {
 } from 'react-router-dom'
 import Login from './pages/Login/page'
 import Home from './pages/Home/page'
-import NotFound from './pages/NotFound/page'
-import Problems from './pages/Problems/page'
+import NotFound from './pages/NotFound'
+import Problems from './pages/Problems'
 import CreateProblem from './pages/CreateProblem'
 import CreateProblemDetail from './pages/CreateProblem/detail'
 import Header from './components/Header/Header'
+import Admin from './pages/Admin'
 
 const MainLayout: React.FC = () => {
     const [state, setState] = useState<boolean>(true)
@@ -47,6 +48,7 @@ const router = createBrowserRouter(
                     path="/createProblem/detail"
                     element={<CreateProblemDetail />}
                 />
+                <Route path="/admin" element={<Admin />} />
             </Route>
             <Route path="/*" element={<NotFound />} />
         </>,

@@ -6,6 +6,7 @@ import { useGenre } from '@/hooks/useGenre'
 import { Action } from './action'
 import { defaultState, reducer } from './reducer'
 import { NumberUtils } from '@/utils/number_utils'
+import Genre from '@/components/Genre/Genre'
 
 export default function CreateProblem() {
     const [state, dispatch] = useReducer(reducer, undefined, defaultState)
@@ -32,10 +33,10 @@ export default function CreateProblem() {
         <>
             <div className={styles.title}>
                 <h2 className={styles.h2}>問題作成</h2>
-                <div className={styles.newCreateProblem}>
+                <div className={styles.btn}>
                     <Button
                         label="新規作成"
-                        onClick={() => navigate(`/createProblem/new`)}
+                        onClick={() => navigate(`/createProblem/detail?id=new`)}
                     />
                 </div>
             </div>
@@ -72,18 +73,15 @@ export default function CreateProblem() {
                                         <p>{item.title}</p>
                                     </td>
                                     <td>
-                                        <p
-                                            style={{
-                                                background: useGenre(item.tags),
-                                            }}
-                                            className={styles.tags}
-                                        >
-                                            {state.tags.map((tag) =>
-                                                tag.id === item.tags
-                                                    ? tag.tag_name
-                                                    : '',
-                                            )}
-                                        </p>
+                                        {state.tags.map((tag) =>
+                                            tag.id === item.tags ? (
+                                                <Genre
+                                                    genreName={tag.tag_name}
+                                                />
+                                            ) : (
+                                                ''
+                                            ),
+                                        )}
                                     </td>
                                     <td>
                                         <p>

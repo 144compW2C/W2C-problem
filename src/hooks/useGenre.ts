@@ -1,16 +1,16 @@
 import { GenreColor } from '@/utils/Color/_genre'
 
-export const useGenre = (props: number | undefined) => {
+export const useGenre = (props: string | undefined) => {
     let genreColor = ''
 
     switch (props) {
-        case 1:
+        case 'HTML':
             genreColor = GenreColor.HTML
             break
-        case 2:
+        case 'CSS':
             genreColor = GenreColor.CSS
             break
-        case 3:
+        case 'JS':
             genreColor = GenreColor.JS
             break
 

@@ -1,0 +1,32 @@
+@import '../../utils/Color/_variables.css';
+@import '../../utils/titleStyle.css';
+
+.AdminWrap {
+    width: 100%;
+
+    .filterContainerWrap {
+        width: 90%;
+        margin: 24px auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+
+        .AdminProblemBtnWrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filterContainer {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            >div {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+    }
+}

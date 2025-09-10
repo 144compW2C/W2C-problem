@@ -70,9 +70,9 @@ export default function Header(props: Type) {
                             <li>問題作成</li>
                         </Link>
                         <Link
-                            to={'#'}
+                            to={'/admin'}
                             className={
-                                location.pathname.startsWith('#')
+                                location.pathname.startsWith('/admin')
                                     ? styles.active
                                     : ''
                             }

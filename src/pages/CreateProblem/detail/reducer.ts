@@ -176,7 +176,7 @@ export function reducer(state: State, action: ActionType): State {
                         modelAnswer: state.modelAnswer.map((row, idx) =>
                             idx !== action.payload.index
                                 ? row
-                                : action.payload.value,
+                                : Number(action.payload.value),
                         ),
                     }
             }
@@ -233,6 +233,7 @@ export function reducer(state: State, action: ActionType): State {
                 ...state,
                 optionName: [...state.optionName, ''],
                 optionContent: [...state.optionContent, ['', '']],
+                modelAnswer: [...state.modelAnswer, 0],
             }
         case 'DELETE_SELECT_PROBLEM':
             return {

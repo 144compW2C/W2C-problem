@@ -13,6 +13,7 @@ export interface ButtonProps {
     label: string
     /** Optional click handler */
     onClick?: () => void
+    color?: string
 }
 
 /** Primary UI component for user interaction */
@@ -20,6 +21,7 @@ export const Button = ({
     primary = false,
     size = 'medium',
     backgroundColor,
+    color,
     label,
     ...props
 }: ButtonProps) => {
@@ -34,7 +36,7 @@ export const Button = ({
                 `storybook-button--${size}`,
                 mode,
             ].join(' ')}
-            style={{ backgroundColor, borderRadius: '8px' }}
+            style={{ backgroundColor, color, borderRadius: '8px' }}
             {...props}
         >
             {label}

@@ -60,7 +60,7 @@ export default function CreateProblemDetail() {
                 <>
                     <div className={styles.title}>
                         <h2 className={styles.h2}>問題作成</h2>
-                        <div className={styles.save}>
+                        <div className={styles.btn}>
                             <Button
                                 label="プレビューを表示"
                                 onClick={() => Action.nextPage(dispatch)}
@@ -429,7 +429,7 @@ export default function CreateProblemDetail() {
                                                         Action.editForm(
                                                             dispatch,
                                                             'newCreate.problem.selectAnswer',
-                                                            e.target.value,
+                                                            e.value,
                                                             index,
                                                         )
                                                     }}
@@ -456,7 +456,20 @@ export default function CreateProblemDetail() {
                         optionContent={state.optionContent}
                         optionName={state.optionName}
                         modelAnswer={state.modelAnswer}
+                        pageNum={state.pageNum}
+                        onClickNextPage={() => {
+                            Action.nextPage(dispatch)
+                        }}
+                        onClickBackPage={() => {
+                            Action.backPage(dispatch)
+                        }}
                     />
+                    <div className={styles.backPage}>
+                        <Button
+                            label="問題作成に戻る"
+                            onClick={() => Action.backPage(dispatch)}
+                        />
+                    </div>
                 </>
             )}
         </>
