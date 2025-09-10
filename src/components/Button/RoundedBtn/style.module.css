@@ -1,0 +1,34 @@
+@import '../../../utils/Color/_variables.css';
+
+.btnWrap {
+    width: 130px;
+    height: 32px;
+    border-radius: 32px;
+
+    .btn {
+        width: 100%;
+        height: 100%;
+        border-radius: 32px;
+        border: none;
+        transition: all 0.2s ease;
+    
+    }
+    
+    .active {
+        background: var(--mouseColor);
+        color: var(--whiteText);
+        
+        &:hover {
+            background: #AFD1D9;
+        }
+    }
+    
+    .inactive {
+        background: var(--whiteText);
+        color: var(--textColor);
+        
+        &:hover {
+            background: #AFD1D9;
+        }
+    }
+}
