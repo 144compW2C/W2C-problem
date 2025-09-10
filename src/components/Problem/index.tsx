@@ -61,7 +61,15 @@ export default function Problem(props: Type) {
                 {props.pageNum === 1 && (
                     <>
                         {props.Problem.is_multiple_choice ? (
-                            <></>
+                            <div className={styles.answerColumnWrap}>
+                                {/* <div>初期zipファイルがある場合に表示する</div> */}
+                                <div className={styles.problemBtnWrap}>
+                                    <Button
+                                        label="模範解答を確認"
+                                        onClick={() => props.onClickNextPage()}
+                                    />
+                                </div>
+                            </div>
                         ) : (
                             <div className={styles.answerColumnWrap}>
                                 <p>解答欄</p>
@@ -125,78 +133,93 @@ export default function Problem(props: Type) {
                 )}
                 {props.pageNum === 2 && (
                     <>
-                        <div className={styles.answerColumnWrap}>
-                            <p>解答</p>
-                            {props.optionName.map((item, idx) => (
-                                <div key={idx}>
-                                    <p>{item}</p>
-                                    {props.optionContent.map((row, rIdx) =>
-                                        rIdx !== idx ? (
-                                            ''
-                                        ) : (
-                                            <div key={rIdx}>
-                                                {row.map((col, cIdx) =>
-                                                    cIdx === state[idx] ? (
-                                                        <>
-                                                            <div
-                                                                key={cIdx}
-                                                                className={
-                                                                    styles.answer
-                                                                }
-                                                            >
-                                                                {state[idx] ===
-                                                                props
-                                                                    .modelAnswer[
-                                                                    idx
-                                                                ] ? (
-                                                                    <p>⭕️</p>
-                                                                ) : (
-                                                                    <p>❌</p>
-                                                                )}
-                                                                <p>{col}</p>
-                                                            </div>
-                                                            {state[idx] !==
-                                                                props
-                                                                    .modelAnswer[
-                                                                    idx
-                                                                ] && (
-                                                                <div>
-                                                                    <p>
-                                                                        正解：
-                                                                        {
-                                                                            props
-                                                                                .optionContent[
-                                                                                idx
-                                                                            ][
-                                                                                props
-                                                                                    .modelAnswer[
-                                                                                    idx
-                                                                                ]
-                                                                            ]
-                                                                        }
-                                                                    </p>
-                                                                </div>
-                                                            )}
-                                                        </>
-                                                    ) : null,
-                                                )}
-                                            </div>
-                                        ),
-                                    )}
-                                </div>
-                            ))}
-                            <div className={styles.problemBtnWrap}>
-                                <Button
-                                    label="問題へ戻る"
-                                    onClick={() => props.onClickBackPage()}
-                                    backgroundColor="#FF7253"
-                                    color="white"
-                                />
-                                <Button
-                                    label="次の問題へ"
-                                    // onClick={() => props.onClick()}
-                                />
+                        {props.Problem.is_multiple_choice ? (
+                            <div className={styles.descriptionAnswerWrap}>
+                                <p>模範解答</p>
+                                <textarea>
+                                    {props.Problem.model_answer}
+                                </textarea>
                             </div>
+                        ) : (
+                            <div className={styles.answerColumnWrap}>
+                                <p>解答</p>
+                                {props.optionName.map((item, idx) => (
+                                    <div key={idx}>
+                                        <p>{item}</p>
+                                        {props.optionContent.map((row, rIdx) =>
+                                            rIdx !== idx ? (
+                                                ''
+                                            ) : (
+                                                <div key={rIdx}>
+                                                    {row.map((col, cIdx) =>
+                                                        cIdx === state[idx] ? (
+                                                            <>
+                                                                <div
+                                                                    key={cIdx}
+                                                                    className={
+                                                                        styles.answer
+                                                                    }
+                                                                >
+                                                                    {state[
+                                                                        idx
+                                                                    ] ===
+                                                                    props
+                                                                        .modelAnswer[
+                                                                        idx
+                                                                    ] ? (
+                                                                        <p>
+                                                                            ⭕️
+                                                                        </p>
+                                                                    ) : (
+                                                                        <p>
+                                                                            ❌
+                                                                        </p>
+                                                                    )}
+                                                                    <p>{col}</p>
+                                                                </div>
+                                                                {state[idx] !==
+                                                                    props
+                                                                        .modelAnswer[
+                                                                        idx
+                                                                    ] && (
+                                                                    <div>
+                                                                        <p>
+                                                                            正解：
+                                                                            {
+                                                                                props
+                                                                                    .optionContent[
+                                                                                    idx
+                                                                                ][
+                                                                                    props
+                                                                                        .modelAnswer[
+                                                                                        idx
+                                                                                    ]
+                                                                                ]
+                                                                            }
+                                                                        </p>
+                                                                    </div>
+                                                                )}
+                                                            </>
+                                                        ) : null,
+                                                    )}
+                                                </div>
+                                            ),
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        <div className={styles.problemBtnWrap}>
+                            <Button
+                                label="問題へ戻る"
+                                onClick={() => props.onClickBackPage()}
+                                backgroundColor="#FF7253"
+                                color="white"
+                            />
+                            <Button
+                                label="次の問題へ"
+                                // onClick={() => props.onClick()}
+                            />
                         </div>
                     </>
                 )}

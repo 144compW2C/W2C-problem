@@ -42,20 +42,28 @@
                 gap: 0px 24px;
             }
         }
-        .problemBtnWrap {
-            width: 100%;
-            padding-top: 48px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 24px;
-        }
-
+        
         .answer {
             display: flex;
             align-items: center;
             gap: 16px;
             margin-bottom: 2px;
+        }
+    }
+    .problemBtnWrap {
+        width: 100%;
+        padding-top: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+    }
+    .descriptionAnswerWrap {
+        textarea {
+            width: 85%;
+            height: 300px;
+            border-radius: 8px;
+            padding: 1rem;
         }
     }
 }

@@ -429,7 +429,7 @@ export default function CreateProblemDetail() {
                                                         Action.editForm(
                                                             dispatch,
                                                             'newCreate.problem.selectAnswer',
-                                                            e.target.value,
+                                                            e.value,
                                                             index,
                                                         )
                                                     }}
