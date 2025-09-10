@@ -33,7 +33,7 @@ export default function CreateProblem() {
         <>
             <div className={styles.title}>
                 <h2 className={styles.h2}>問題作成</h2>
-                <div className={styles.newCreateProblem}>
+                <div className={styles.btn}>
                     <Button
                         label="新規作成"
                         onClick={() => navigate(`/createProblem/detail?id=new`)}

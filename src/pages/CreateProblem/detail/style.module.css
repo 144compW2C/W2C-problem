@@ -1,22 +1,5 @@
 @import '../../../utils/Color/_variables.css';
-
-.title {
-    width: 100%;
-    height: 74px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--gray);
-
-    .h2 {
-        margin-left: 32px;
-        font-size: 24px;
-    }
-
-    .save {
-        margin-right: 24px;
-    }
-}
+@import '../../../utils/titleStyle.css';
 
 .newCreateProblemWrap {
     width: 95%;

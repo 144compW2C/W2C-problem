@@ -60,7 +60,7 @@ export default function CreateProblemDetail() {
                 <>
                     <div className={styles.title}>
                         <h2 className={styles.h2}>問題作成</h2>
-                        <div className={styles.save}>
+                        <div className={styles.btn}>
                             <Button
                                 label="プレビューを表示"
                                 onClick={() => Action.nextPage(dispatch)}
