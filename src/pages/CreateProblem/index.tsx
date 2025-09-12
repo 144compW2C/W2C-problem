@@ -2,7 +2,6 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import styles from './style.module.css'
 import { useEffect, useReducer } from 'react'
 import { Button } from '@/stories/Button'
-import { useGenre } from '@/hooks/useGenre'
 import { Action } from './action'
 import { defaultState, reducer } from './reducer'
 import { NumberUtils } from '@/utils/number_utils'
@@ -74,7 +73,7 @@ export default function CreateProblem() {
                                     </td>
                                     <td>
                                         {state.tags.map((tag) =>
-                                            tag.id === item.tags ? (
+                                            tag.id === item.fk_tags ? (
                                                 <Genre
                                                     genreName={tag.tag_name}
                                                 />
@@ -91,7 +90,7 @@ export default function CreateProblem() {
                                     <td>
                                         <p>
                                             {state.status.map((sta) =>
-                                                sta.id === item.status
+                                                sta.id === item.fk_status
                                                     ? sta.status_name
                                                     : '',
                                             )}

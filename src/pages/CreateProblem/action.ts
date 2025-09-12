@@ -1,9 +1,9 @@
 import { ActionType } from './reducer'
 import { NumberUtils } from '@/utils/number_utils'
 import { CreateProblemApi } from '@/models/ApiType/CreateProblem/type'
-import { testData } from '@/models/entity/fmt/CreateProblemFmt0001'
 import { tagsTestDate } from '@/models/entity/Tags'
 import { statusTestDate } from '@/models/entity/Status'
+import { localURL } from '@/utils/baseURL'
 
 export namespace Action {
     export async function findCreateProblem(
@@ -30,27 +30,34 @@ export namespace Action {
             })
 
             /* バックエンドが完成したらコメントアウトを外す */
-            // const CreateProblemRes = await fetch(
-            //     // バックエンドができたらこのURLを変更
-            //     `http://test.com/create/problems?${params.toString}`,
-            //     {
-            //     method: 'GET',
-            //     cache: 'no-cache',
-            //     },
-            // )
+            const CreateProblemRes = await fetch(
+                // バックエンドができたらこのURLを変更
+                `${localURL}/createProblem?${params.toString}`,
+                {
+                    method: 'GET',
+                    cache: 'no-cache',
+                },
+            )
 
-            // const CreateProblemResult: CreateProblemApi.GET.Response =
-            // await CreateProblemRes.json()
-            /* ここまで */
+            const backendResult: CreateProblemApi.GET.BackendResponse =
+                await CreateProblemRes.json()
 
-            /* バックエンドが完成するまでtestDataを使用 */
+            const convertedList = backendResult.list.map((item) => ({
+                id: item.id,
+                title: item.title,
+                fk_tags: item.fk_tags ?? 0,
+                fk_status: item.fk_status ?? 0,
+                level: item.level ?? 0,
+                difficulty: item.difficulty ?? 0,
+                creator_id: item.creator_id ?? 0,
+            }))
+
             const CreateProblemResult: CreateProblemApi.GET.Response = {
-                list: testData.slice(cond.offset, cond.limit),
-                total: testData.length,
-                tags: tagsTestDate,
-                status: statusTestDate,
+                list: convertedList,
+                total: backendResult.total,
+                tags: tagsTestDate, // 暫定的にテストデータを使用
+                status: statusTestDate, // 暫定的にテストデータを使用
             }
-            /* ここのまでがテスト */
 
             dispatch({
                 type: 'FIND_CREATE_PROBLEM_SUCCESS',
