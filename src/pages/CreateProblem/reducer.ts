@@ -1,6 +1,6 @@
-import { CreateProblemFmt001VO } from '@/models/entity/fmt/CreateProblemFmt0001'
-import { StatusVO } from '@/models/entity/Status'
-import { TagsVO } from '@/models/entity/Tags'
+import { CreateProblemFmt001VO } from '@/models/entity/client/fmt/CreateProblemFmt0001'
+import { StatusVO } from '@/models/entity/client/Status'
+import { TagsVO } from '@/models/entity/client/Tags'
 
 export type ActionType =
     // ==============================================

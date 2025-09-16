@@ -1,9 +1,9 @@
 import { ActionType } from './reducer'
 import { NumberUtils } from '@/utils/number_utils'
 import { CreateProblemApi } from '@/models/ApiType/CreateProblem/type'
-import { tagsTestDate } from '@/models/entity/Tags'
-import { statusTestDate } from '@/models/entity/Status'
-import { localURL } from '@/utils/baseURL'
+import { baseURL } from '@/utils/baseURL'
+import { TagsVO } from '@/models/entity/client/Tags'
+import { StatusVO } from '@/models/entity/client/Status'
 
 export namespace Action {
     export async function findCreateProblem(
@@ -29,10 +29,9 @@ export namespace Action {
                 id: NumberUtils.formatNumber(cond.id),
             })
 
-            /* バックエンドが完成したらコメントアウトを外す */
+            /* 問題一覧を入手 */
             const CreateProblemRes = await fetch(
-                // バックエンドができたらこのURLを変更
-                `${localURL}/createProblem?${params.toString}`,
+                `${baseURL}/createProblem?${params.toString}`,
                 {
                     method: 'GET',
                     cache: 'no-cache',
@@ -52,11 +51,25 @@ export namespace Action {
                 creator_id: item.creator_id ?? 0,
             }))
 
+            /* タグ一覧を入手 */
+            const tagsRes = await fetch(`${baseURL}/tags`, {
+                method: 'GET',
+                cache: 'no-cache',
+            })
+            const tagsResult: TagsVO.Type[] = await tagsRes.json()
+
+            /* ステータス一覧を入手 */
+            const statusRes = await fetch(`${baseURL}/status`, {
+                method: 'GET',
+                cache: 'no-cache',
+            })
+            const statusResult: StatusVO.Type[] = await statusRes.json()
+
             const CreateProblemResult: CreateProblemApi.GET.Response = {
                 list: convertedList,
                 total: backendResult.total,
-                tags: tagsTestDate, // 暫定的にテストデータを使用
-                status: statusTestDate, // 暫定的にテストデータを使用
+                tags: tagsResult,
+                status: statusResult,
             }
 
             dispatch({

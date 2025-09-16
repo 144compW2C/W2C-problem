@@ -1,6 +1,6 @@
-import { OptionsVO } from '@/models/entity/Options'
-import { ProblemVO } from '@/models/entity/Problem'
-import { TagsVO } from '@/models/entity/Tags'
+import { OptionsVO } from '@/models/entity/client/Options'
+import { ProblemVO } from '@/models/entity/client/Problem'
+import { TagsVO } from '@/models/entity/client/Tags'
 
 export namespace CreateProblemDetailApi {
     export namespace GET {
@@ -8,6 +8,9 @@ export namespace CreateProblemDetailApi {
             id: string
         }
 
+        export type BackendResponse = {
+            data: ProblemVO.Type
+        }
         export type Response = {
             item: ProblemVO.Type
             tags: TagsVO.Type[]

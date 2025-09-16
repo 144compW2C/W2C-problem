@@ -22,22 +22,31 @@ export default function CreateProblemDetail() {
     }, [location.search])
 
     useEffect(() => {
+        console.log('useEffect実行 - 条件チェック:')
+        console.log('  state.option.content:', state.option.content)
+        console.log('  state.isWaiting:', state.isWaiting)
+        console.log('  state.option.input_type:', state.option.input_type)
+        console.log(
+            '  state.createProblemDetail.is_multiple_choice:',
+            state.createProblemDetail.is_multiple_choice,
+        )
+
         // データが取得済みかどうかをチェック
         if (
             !state.option.content ||
             state.isWaiting ||
             state.option.input_type
         ) {
+            console.log('早期リターン - 条件に該当')
             return // データがまだ取得されていない場合は何もしない
         }
-
         if (
             state.createProblemDetail.is_multiple_choice !==
             state.option.input_type
         ) {
+            console.log('出題形式が異なるため、処理をスキップ')
             /* 保存されている出題形式と編集中の出題形式が一緒じゃない時option.content(模範解答)を削除 */
         } else if (!state.option.input_type) {
-            /* 出題形式が選択式の時option.contentとoption.option_nameの""を削除して文字型から配列に変更 */
             Action.convertStringsToArray(dispatch, {
                 content: state.option.content,
                 option_name: state.option.option_name,

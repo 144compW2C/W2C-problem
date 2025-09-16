@@ -1,9 +1,11 @@
 import { NumberUtils } from '@/utils/number_utils'
 import { ActionType } from './reducer'
-import { ProblemVO, testData } from '@/models/entity/Problem'
 import { CreateProblemDetailApi } from '@/models/ApiType/CreateProblemDetail/type'
-import { tagsTestDate } from '@/models/entity/Tags'
-import { OptionsVO, optionTestDate } from '@/models/entity/Options'
+import { baseURL } from '@/utils/baseURL'
+import { TagsVO } from '@/models/entity/client/Tags'
+import { ProblemConverter } from '@/models/entity/converter/Problem'
+import { ProblemVO } from '@/models/entity/client/Problem'
+import { OptionsVO } from '@/models/entity/client/Options'
 
 export namespace Action {
     export async function editForm(
@@ -34,51 +36,61 @@ export namespace Action {
         })
 
         try {
-            const params = new URLSearchParams({
-                id: NumberUtils.formatNumber(cond.id),
-            })
+            const params = NumberUtils.formatNumber(cond.id)
+            let convertedProblem: ProblemVO.Type
 
-            /* バックエンドが完成したらコメントアウトを外す */
-            // const CreateProblemRes = await fetch(
-            //     // バックエンドができたらこのURLを変更
-            //     `http://test.com/problems?${params.toString}`,
-            //     {
-            //     method: 'GET',
-            //     cache: 'no-cache',
-            //     },
-            // )
+            // paramsが0の場合は新規作成
+            if (params === '0') {
+                console.log('新規問題作成')
+                convertedProblem = ProblemVO.create()
+            } else {
+                // 既存問題の取得
+                const CreateProblemRes = await fetch(
+                    `http://localhost:8787/problems/${params}`,
+                    {
+                        method: 'GET',
+                        cache: 'no-cache',
+                    },
+                )
 
-            // const CreateProblemResult: CreateProblemApi.GET.Response =
-            // await CreateProblemRes.json()
-            /* ここまで */
-            let detail = ProblemVO.create()
-            testData.forEach((element) => {
-                if (element.id === cond.id) {
-                    detail = element
-                }
-            })
+                const CreateProblemResult: CreateProblemDetailApi.GET.BackendResponse =
+                    await CreateProblemRes.json()
 
-            let option = OptionsVO.create()
-            optionTestDate.forEach((element) => {
-                if (detail.id === element.fk_problem) {
-                    option = element
-                }
-            })
-
-            const tags = tagsTestDate
-
-            const CreateProblemResult: CreateProblemDetailApi.GET.Response = {
-                item: detail,
-                tags,
-                option,
+                /* この場所でバックエンドからもらったデータの型をフロント側ようの型に変更する */
+                convertedProblem = ProblemConverter.fromBackendToVo(
+                    CreateProblemResult?.data,
+                )
             }
 
+            /* タグ一覧を入手 */
+            const tagsRes = await fetch(`${baseURL}/tags`, {
+                method: 'GET',
+                cache: 'no-cache',
+            })
+            const tagsResult: TagsVO.Type[] = await tagsRes.json()
+
+            /* 問題のオプションを入手 */
+            const optionRes = await fetch(
+                `${baseURL}/options/${convertedProblem.id}`,
+                {
+                    method: 'GET',
+                    cache: 'no-cache',
+                },
+            )
+            const optionResult: OptionsVO.Type = await optionRes.json()
+
+            const CreateProblemDetailResult: CreateProblemDetailApi.GET.Response =
+                {
+                    item: convertedProblem,
+                    tags: tagsResult,
+                    option: optionResult,
+                }
             dispatch({
                 type: 'FIND_CREATE_PROBLEM_DETAIL_SUCCESS',
                 payload: {
-                    createProblemDetail: CreateProblemResult.item,
-                    tags: CreateProblemResult.tags,
-                    option: CreateProblemResult.option,
+                    createProblemDetail: CreateProblemDetailResult.item,
+                    tags: CreateProblemDetailResult.tags,
+                    option: CreateProblemDetailResult.option,
                 },
             })
         } catch (e) {

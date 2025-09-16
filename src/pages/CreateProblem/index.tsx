@@ -74,9 +74,11 @@ export default function CreateProblem() {
                                     <td>
                                         {state.tags.map((tag) =>
                                             tag.id === item.fk_tags ? (
-                                                <Genre
-                                                    genreName={tag.tag_name}
-                                                />
+                                                <div key={tag.id}>
+                                                    <Genre
+                                                        genreName={tag.tag_name}
+                                                    />
+                                                </div>
                                             ) : (
                                                 ''
                                             ),
