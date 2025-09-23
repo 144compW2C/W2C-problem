@@ -15,6 +15,7 @@ export namespace ProblemVO {
         updated_at: string
         reviewed_at: string
         delete_flag: boolean
+        version: number
     }
 
     export function create(): ProblemVO.Type {
@@ -27,6 +28,7 @@ export namespace ProblemVO {
             updated_at: '',
             reviewed_at: '',
             delete_flag: false,
+            version: 0,
         }
     }
 }

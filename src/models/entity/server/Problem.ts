@@ -15,5 +15,6 @@ export namespace Problem {
         is_multiple_choice: boolean | null
         model_answer: string | null
         reviewed_at: string | null
+        version: number | null
     }
 }

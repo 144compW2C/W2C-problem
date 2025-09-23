@@ -22,6 +22,7 @@ export namespace ProblemConverter {
             updated_at: StringUtils.nvl(src.updated_at),
             reviewed_at: StringUtils.nvl(src.reviewed_at),
             delete_flag: BooleanUtils.ensureBool(src.delete_flag),
+            version: NumberUtils.ensureNumber(src.version),
         }
     }
 
@@ -51,6 +52,7 @@ export namespace ProblemConverter {
             updated_at: backendData.updated_at || '',
             reviewed_at: backendData.reviewed_at || '',
             delete_flag: backendData.delete_flag ?? false,
+            version: backendData.version ?? null,
         }
 
         const result = toVo(serverData)
