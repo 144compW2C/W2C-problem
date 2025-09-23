@@ -2,19 +2,17 @@ import styles from './style.module.css'
 import filterImg from '@/assets/filter.svg'
 import sortImg from '@/assets/sort.svg'
 import arrow from '@/assets/arrow.svg'
-import { useState } from 'react'
+import { useEffect, useReducer } from 'react'
+import { defaultState, reducer } from './reducer'
+import { useLocation } from 'react-router-dom'
+import { Action } from './action'
 
 export default function Problems() {
-    const [state, setState] = useState({
-        front: false,
-        HTML: false,
-        CSS: false,
-        JS: false,
-        design: false,
-        Figma: false,
-        Illustrator: false,
-        Photoshop: false,
-    })
+    const [state, dispatch] = useReducer(reducer, undefined, defaultState)
+    const location = useLocation()
+
+    useEffect(() => {}, [location.search])
+
     return (
         <>
             <div className={styles.title}>
@@ -54,45 +52,42 @@ export default function Problems() {
                             <div
                                 className={styles.problemsCategory}
                                 onClick={() =>
-                                    setState((prev) => ({
-                                        ...prev,
-                                        front: !prev.front,
-                                    }))
+                                    Action.openForm(dispatch, 'genre.front')
                                 }
                             >
                                 <img
                                     src={arrow}
                                     alt="矢印のアイコン"
                                     style={{
-                                        transform: !state.front
+                                        transform: !state.genreFlag.front
                                             ? 'rotate(-90deg)'
                                             : 'rotate(0deg)',
                                     }}
                                 />
                                 <p>フロントエンド</p>
                             </div>
-                            {state.front && (
+                            {state.genreFlag.front && (
                                 <div className={styles.problemsGenre}>
                                     <div
                                         onClick={() =>
-                                            setState((prev) => ({
-                                                ...prev,
-                                                HTML: !prev.HTML,
-                                            }))
+                                            Action.openForm(
+                                                dispatch,
+                                                'genre.HTML',
+                                            )
                                         }
                                     >
                                         <img
                                             src={arrow}
                                             alt="矢印のアイコン"
                                             style={{
-                                                transform: !state.HTML
+                                                transform: !state.genreFlag.HTML
                                                     ? 'rotate(-90deg)'
                                                     : 'rotate(0deg)',
                                             }}
                                         />
                                         <p>HTML</p>
                                     </div>
-                                    {state.HTML && (
+                                    {state.genreFlag.HTML && (
                                         <>
                                             <div
                                                 className={
@@ -153,24 +148,21 @@ export default function Problems() {
                             <div
                                 className={styles.problemsCategory}
                                 onClick={() =>
-                                    setState((prev) => ({
-                                        ...prev,
-                                        design: !prev.design,
-                                    }))
+                                    Action.openForm(dispatch, 'genre.design')
                                 }
                             >
                                 <img
                                     src={arrow}
                                     alt="矢印のアイコン"
                                     style={{
-                                        transform: !state.design
+                                        transform: !state.genreFlag.design
                                             ? 'rotate(-90deg)'
                                             : 'rotate(0deg)',
                                     }}
                                 />
                                 <p>デザイン</p>
                             </div>
-                            {state.design && (
+                            {state.genreFlag.design && (
                                 <div className={styles.problemsGenre}>
                                     <div>
                                         <img src={arrow} alt="矢印のアイコン" />
