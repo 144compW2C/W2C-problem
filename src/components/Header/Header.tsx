@@ -10,10 +10,10 @@ type Type = {
 }
 
 export default function Header(props: Type) {
-    const [isOpen, setIsOpen] = useState(false)
-    const toggleHamburger = () => {
-        setIsOpen(!isOpen)
-    }
+    // const [isOpen, setIsOpen] = useState(false)
+    // const toggleHamburger = () => {
+    //     setIsOpen(!isOpen)
+    // }
     const location = useLocation()
     return (
         <header className={styles.headerWrap}>

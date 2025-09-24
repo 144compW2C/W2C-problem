@@ -6,6 +6,7 @@ import { TagsVO } from '@/models/entity/client/Tags'
 import { ProblemConverter } from '@/models/entity/converter/Problem'
 import { ProblemVO } from '@/models/entity/client/Problem'
 import { OptionsVO } from '@/models/entity/client/Options'
+import { CreateProblemApi } from '@/models/ApiType/CreateProblem/type'
 
 export namespace Action {
     export async function editForm(
@@ -25,6 +26,7 @@ export namespace Action {
             },
         })
     }
+
     export async function findCreateProblemDetail(
         dispatch: React.Dispatch<ActionType>,
         cond: {
@@ -46,7 +48,7 @@ export namespace Action {
             } else {
                 // 既存問題の取得
                 const CreateProblemRes = await fetch(
-                    `http://localhost:8787/problems/${params}`,
+                    `${baseURL}/problems/${params}`,
                     {
                         method: 'GET',
                         cache: 'no-cache',
@@ -95,6 +97,34 @@ export namespace Action {
             })
         } catch (e) {
             dispatch({ type: 'FIND_CREATE_PROBLEM_DETAIL_FAILURE' })
+            throw e
+        }
+    }
+
+    export async function saveCreateProblemDetail(
+        dispatch: React.Dispatch<ActionType>,
+        createProblemDetail: ProblemVO.Type,
+        // option: OptionsVO.Type
+    ) {
+        dispatch({ type: 'SAVE_CREATE_PROBLEM_DETAIL_REQUEST' })
+
+        try {
+            const json: CreateProblemApi.POST.Request = {
+                createProblemDetail,
+                // option
+            }
+
+            const res = await fetch(`${baseURL}/createProblem`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(json),
+            })
+
+            const result: CreateProblemApi.POST.Response = await res.json()
+        } catch (e) {
+            dispatch({ type: 'SAVE_CREATE_PROBLEM_DETAIL_FAILURE' })
             throw e
         }
     }

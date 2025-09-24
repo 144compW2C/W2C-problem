@@ -30,6 +30,20 @@ export type ActionType =
       }
     // ==============================================
     | {
+          type: 'SAVE_CREATE_PROBLEM_DETAIL_REQUEST'
+      }
+    | {
+          type: 'SAVE_CREATE_PROBLEM_DETAIL_SUCCESS'
+          payload: {
+              createProblemDetail: ProblemVO.Type
+              option: OptionsVO.Type
+          }
+      }
+    | {
+          type: 'SAVE_CREATE_PROBLEM_DETAIL_FAILURE'
+      }
+    // ==============================================
+    | {
           type: 'CONVERT_STRINGS_TO_ARRAY'
           payload: {
               optionContent: string[][]
@@ -196,6 +210,24 @@ export function reducer(state: State, action: ActionType): State {
                 option: action.payload.option,
             }
         case 'FIND_CREATE_PROBLEM_DETAIL_FAILURE':
+            return {
+                ...state,
+                isWaiting: false,
+            }
+        // ==============================================
+        case 'SAVE_CREATE_PROBLEM_DETAIL_REQUEST':
+            return {
+                ...state,
+                isWaiting: true,
+            }
+        case 'SAVE_CREATE_PROBLEM_DETAIL_SUCCESS':
+            return {
+                ...state,
+                isWaiting: false,
+                createProblemDetail: action.payload.createProblemDetail,
+                option: action.payload.option,
+            }
+        case 'SAVE_CREATE_PROBLEM_DETAIL_FAILURE':
             return {
                 ...state,
                 isWaiting: false,
