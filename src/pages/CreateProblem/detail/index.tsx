@@ -22,15 +22,6 @@ export default function CreateProblemDetail() {
     }, [location.search])
 
     useEffect(() => {
-        console.log('useEffect実行 - 条件チェック:')
-        console.log('  state.option.content:', state.option.content)
-        console.log('  state.isWaiting:', state.isWaiting)
-        console.log('  state.option.input_type:', state.option.input_type)
-        console.log(
-            '  state.createProblemDetail.is_multiple_choice:',
-            state.createProblemDetail.is_multiple_choice,
-        )
-
         // データが取得済みかどうかをチェック
         if (
             !state.option.content ||
@@ -451,7 +442,20 @@ export default function CreateProblemDetail() {
                         )}
 
                         <div className={styles.append}>
-                            <Button label="下書き保存" />
+                            <Button
+                                label="下書き保存"
+                                onClick={() => {
+                                    Action.saveCreateProblemDetail(
+                                        dispatch,
+                                        state.createProblemDetail,
+                                        state.option,
+                                        state.optionContent,
+                                        state.optionName,
+                                        state.modelAnswer,
+                                        false,
+                                    )
+                                }}
+                            />
                             <Button label="申請" />
                         </div>
                     </div>

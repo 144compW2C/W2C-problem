@@ -30,7 +30,7 @@ export namespace CreateProblemApi {
     export namespace POST {
         export type Request = {
             createProblemDetail: ProblemVO.Type
-            // option: OptionsVO.Type
+            option: OptionsVO.Type
         }
         export type Response = {
             id: number

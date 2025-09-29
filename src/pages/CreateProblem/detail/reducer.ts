@@ -34,10 +34,6 @@ export type ActionType =
       }
     | {
           type: 'SAVE_CREATE_PROBLEM_DETAIL_SUCCESS'
-          payload: {
-              createProblemDetail: ProblemVO.Type
-              option: OptionsVO.Type
-          }
       }
     | {
           type: 'SAVE_CREATE_PROBLEM_DETAIL_FAILURE'
@@ -224,8 +220,6 @@ export function reducer(state: State, action: ActionType): State {
             return {
                 ...state,
                 isWaiting: false,
-                createProblemDetail: action.payload.createProblemDetail,
-                option: action.payload.option,
             }
         case 'SAVE_CREATE_PROBLEM_DETAIL_FAILURE':
             return {

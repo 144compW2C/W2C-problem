@@ -6,6 +6,7 @@ import { useEffect, useReducer } from 'react'
 import { defaultState, reducer } from './reducer'
 import { useLocation } from 'react-router-dom'
 import { Action } from './action'
+import { stat } from 'fs'
 
 export default function Problems() {
     const [state, dispatch] = useReducer(reducer, undefined, defaultState)
@@ -133,14 +134,94 @@ export default function Problems() {
                                             </div>
                                         </>
                                     )}
-                                    <div>
-                                        <img src={arrow} alt="矢印のアイコン" />
+                                    <div
+                                        onClick={() =>
+                                            Action.openForm(
+                                                dispatch,
+                                                'genre.CSS',
+                                            )
+                                        }
+                                    >
+                                        <img
+                                            src={arrow}
+                                            alt="矢印のアイコン"
+                                            style={{
+                                                transform: !state.genreFlag.CSS
+                                                    ? 'rotate(-90deg)'
+                                                    : 'rotate(0deg)',
+                                            }}
+                                        />
                                         <p>CSS</p>
                                     </div>
-                                    <div>
-                                        <img src={arrow} alt="矢印のアイコン" />
+                                    {state.genreFlag.CSS && (
+                                        <>
+                                            <div
+                                                className={
+                                                    styles.problemsTableRow
+                                                }
+                                            >
+                                                <div>
+                                                    <p>正誤</p>
+                                                </div>
+                                                <div>
+                                                    <p>タイトル</p>
+                                                </div>
+                                                <div>
+                                                    <p>ジャンル</p>
+                                                </div>
+                                                <div>
+                                                    <p>レベル</p>
+                                                </div>
+                                                <div>
+                                                    <p>作成者</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                    <div
+                                        onClick={() =>
+                                            Action.openForm(
+                                                dispatch,
+                                                'genre.JS',
+                                            )
+                                        }
+                                    >
+                                        <img
+                                            src={arrow}
+                                            alt="矢印のアイコン"
+                                            style={{
+                                                transform: !state.genreFlag.JS
+                                                    ? 'rotate(-90deg)'
+                                                    : 'rotate(0deg)',
+                                            }}
+                                        />
                                         <p>JavaScript</p>
                                     </div>
+                                    {state.genreFlag.JS && (
+                                        <>
+                                            <div
+                                                className={
+                                                    styles.problemsTableRow
+                                                }
+                                            >
+                                                <div>
+                                                    <p>正誤</p>
+                                                </div>
+                                                <div>
+                                                    <p>タイトル</p>
+                                                </div>
+                                                <div>
+                                                    <p>ジャンル</p>
+                                                </div>
+                                                <div>
+                                                    <p>レベル</p>
+                                                </div>
+                                                <div>
+                                                    <p>作成者</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -164,18 +245,186 @@ export default function Problems() {
                             </div>
                             {state.genreFlag.design && (
                                 <div className={styles.problemsGenre}>
-                                    <div>
-                                        <img src={arrow} alt="矢印のアイコン" />
+                                    <div
+                                        onClick={() =>
+                                            Action.openForm(
+                                                dispatch,
+                                                'genre.Figma',
+                                            )
+                                        }
+                                    >
+                                        <img
+                                            src={arrow}
+                                            alt="矢印のアイコン"
+                                            style={{
+                                                transform: !state.genreFlag
+                                                    .Figma
+                                                    ? 'rotate(-90deg)'
+                                                    : 'rotate(0deg)',
+                                            }}
+                                        />
                                         <p>Figma</p>
                                     </div>
-                                    <div>
-                                        <img src={arrow} alt="矢印のアイコン" />
+                                    {state.genreFlag.Figma && (
+                                        <>
+                                            <div
+                                                className={
+                                                    styles.problemsTableRow
+                                                }
+                                            >
+                                                <div>
+                                                    <p>正誤</p>
+                                                </div>
+                                                <div>
+                                                    <p>タイトル</p>
+                                                </div>
+                                                <div>
+                                                    <p>ジャンル</p>
+                                                </div>
+                                                <div>
+                                                    <p>レベル</p>
+                                                </div>
+                                                <div>
+                                                    <p>作成者</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                    <div
+                                        onClick={() =>
+                                            Action.openForm(
+                                                dispatch,
+                                                'genre.Illustrator',
+                                            )
+                                        }
+                                    >
+                                        <img
+                                            src={arrow}
+                                            alt="矢印のアイコン"
+                                            style={{
+                                                transform: !state.genreFlag
+                                                    .Illustrator
+                                                    ? 'rotate(-90deg)'
+                                                    : 'rotate(0deg)',
+                                            }}
+                                        />
                                         <p>Illustrator</p>
                                     </div>
-                                    <div>
-                                        <img src={arrow} alt="矢印のアイコン" />
+                                    {state.genreFlag.Illustrator && (
+                                        <>
+                                            <div
+                                                className={
+                                                    styles.problemsTableRow
+                                                }
+                                            >
+                                                <div>
+                                                    <p>正誤</p>
+                                                </div>
+                                                <div>
+                                                    <p>タイトル</p>
+                                                </div>
+                                                <div>
+                                                    <p>ジャンル</p>
+                                                </div>
+                                                <div>
+                                                    <p>レベル</p>
+                                                </div>
+                                                <div>
+                                                    <p>作成者</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                    <div
+                                        onClick={() =>
+                                            Action.openForm(
+                                                dispatch,
+                                                'genre.Photoshop',
+                                            )
+                                        }
+                                    >
+                                        <img
+                                            src={arrow}
+                                            alt="矢印のアイコン"
+                                            style={{
+                                                transform: !state.genreFlag
+                                                    .Photoshop
+                                                    ? 'rotate(-90deg)'
+                                                    : 'rotate(0deg)',
+                                            }}
+                                        />
                                         <p>Photoshop</p>
                                     </div>
+                                    {state.genreFlag.Photoshop && (
+                                        <>
+                                            <div
+                                                className={
+                                                    styles.problemsTableRow
+                                                }
+                                            >
+                                                <div>
+                                                    <p>正誤</p>
+                                                </div>
+                                                <div>
+                                                    <p>タイトル</p>
+                                                </div>
+                                                <div>
+                                                    <p>ジャンル</p>
+                                                </div>
+                                                <div>
+                                                    <p>レベル</p>
+                                                </div>
+                                                <div>
+                                                    <p>作成者</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
+                                    <div
+                                        onClick={() =>
+                                            Action.openForm(
+                                                dispatch,
+                                                'genre.ColorTheoryTest',
+                                            )
+                                        }
+                                    >
+                                        <img
+                                            src={arrow}
+                                            alt="矢印のアイコン"
+                                            style={{
+                                                transform: !state.genreFlag
+                                                    .ColorTheoryTest
+                                                    ? 'rotate(-90deg)'
+                                                    : 'rotate(0deg)',
+                                            }}
+                                        />
+                                        <p>色彩</p>
+                                    </div>
+                                    {state.genreFlag.ColorTheoryTest && (
+                                        <>
+                                            <div
+                                                className={
+                                                    styles.problemsTableRow
+                                                }
+                                            >
+                                                <div>
+                                                    <p>正誤</p>
+                                                </div>
+                                                <div>
+                                                    <p>タイトル</p>
+                                                </div>
+                                                <div>
+                                                    <p>ジャンル</p>
+                                                </div>
+                                                <div>
+                                                    <p>レベル</p>
+                                                </div>
+                                                <div>
+                                                    <p>作成者</p>
+                                                </div>
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
                             )}
                         </div>

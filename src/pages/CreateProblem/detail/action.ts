@@ -104,14 +104,32 @@ export namespace Action {
     export async function saveCreateProblemDetail(
         dispatch: React.Dispatch<ActionType>,
         createProblemDetail: ProblemVO.Type,
-        // option: OptionsVO.Type
+        option: OptionsVO.Type,
+        optionContent: string[][],
+        optionName: string[],
+        modelAnswer: number[],
+        applyFlag: boolean,
     ) {
         dispatch({ type: 'SAVE_CREATE_PROBLEM_DETAIL_REQUEST' })
+        let saveDataP: ProblemVO.Type = createProblemDetail
+        let saveDataO: OptionsVO.Type = option
+
+        if (!applyFlag) {
+            saveDataP.fk_status = 1
+        } else {
+            saveDataP.fk_status = 2
+        }
+
+        convertArrayToStrings(saveDataP, saveDataO, {
+            optionContent,
+            optionName,
+            modelAnswer,
+        })
 
         try {
             const json: CreateProblemApi.POST.Request = {
-                createProblemDetail,
-                // option
+                createProblemDetail: saveDataP,
+                option,
             }
 
             const res = await fetch(`${baseURL}/createProblem`, {
@@ -123,6 +141,9 @@ export namespace Action {
             })
 
             const result: CreateProblemApi.POST.Response = await res.json()
+
+            dispatch({ type: 'SAVE_CREATE_PROBLEM_DETAIL_SUCCESS' })
+            findCreateProblemDetail(dispatch, { id: result.id })
         } catch (e) {
             dispatch({ type: 'SAVE_CREATE_PROBLEM_DETAIL_FAILURE' })
             throw e
@@ -162,6 +183,23 @@ export namespace Action {
                 modelAnswer,
             },
         })
+    }
+    export function convertArrayToStrings(
+        problemData: ProblemVO.Type,
+        optionDate: OptionsVO.Type,
+        cond: {
+            optionContent: string[][]
+            optionName: string[]
+            modelAnswer: number[]
+        },
+    ) {
+        try {
+            problemData.model_answer = `${cond.modelAnswer}`
+            optionDate.option_name = `${cond.optionName}`
+            optionDate.content = `${cond.optionContent}`
+        } catch (error) {
+            console.error('Array parse error:', error)
+        }
     }
 
     export function addChoices(
