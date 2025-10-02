@@ -1,0 +1,121 @@
+@import '../../utils/Color/_variables.css';
+
+.content{
+    margin: 50px 0;
+    h1{
+        text-align: center;
+        margin: 20px 0;
+    }
+}
+
+.filterNav{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    .filterWrap{
+        display: flex;
+        align-items: center;
+        width: 450px;
+        border-radius: 50px;
+        background: var(--bgHover);
+        select{
+            background: var(--bgHover);
+            border: none;
+            font-size: 1.5rem;
+            margin: 0 30px;
+            height: 40px;
+            width: 100px;
+        }
+        h2{
+            border-left: solid 1px var(--grayText);
+            span{
+                font-weight: normal;
+                font-size: 1rem;
+                margin: 0.5rem;
+            }
+            &::before{
+                content: url("../../assets/success.svg");
+                margin: 0 30px;
+                width: 20px;
+            }
+        }
+    }
+}
+
+.taskFilter{
+    background-color: var(--mouseColor);
+    border-radius: 10px 10px 0 0;
+    margin: 2px;
+    padding: 10px;
+    input{
+        display: none;
+    }
+    label{
+        color: var(--whiteText);
+        margin: 0 5px;
+        padding: 15px 30px;
+        &:hover{
+            background: var(--whiteAlpha70);
+            color: var(--grayText);
+            border-radius: 10px 10px 0 0;
+            padding: 15px 30px;
+    
+        }
+    }
+    input[type=radio]:checked + label{
+        background: var(--whiteText);
+        color: var(--textColor);
+        border-radius: 10px 10px 0 0;
+        padding: 15px 30px;
+        border-bottom: solid 1px var(--grayText);
+    
+    }
+}
+
+.taskTable{
+    border: solid 3px var(--mouseColor);
+    border-radius: 16px;
+    width: 1123px;
+    height: 480px;
+    margin: auto;
+    table{
+        margin: auto;
+        width: 1000px;
+        margin-top: 25px;
+        tr{
+            display: flex;
+            justify-content: space-between;
+            border-bottom: solid 1px var(--grayText);
+            padding: 5px 0;
+            td{
+                width: 250px;
+                margin-left: 15px;
+                &:nth-last-child(1){
+                    width: 100px;
+                }
+            }
+        }
+        thead{
+            tr{
+                border-bottom: solid 3px var(--textColor);
+                &::after{
+                    content: "";
+                    width: 15px;
+                }    
+
+            }
+        }
+        tbody{
+            tr{
+                &::after{
+                    content: url("../../assets/arrow.svg");
+                    width: 15px;
+                } 
+                &:hover{
+                    background-color: var(--bgHover);
+                }
+            }
+        }
+    }
+}
+
