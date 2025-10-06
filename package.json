@@ -20,7 +20,11 @@
     "docker:test": "docker-compose -f docker/docker-compose.yml run test",
     "docker:ci": "docker-compose -f docker/docker-compose.yml run ci",
     "docker:build": "docker build -f docker/Dockerfile -t w2c-problem .",
-    "docker:build:prod": "docker build -f docker/Dockerfile.prod -t w2c-problem:prod ."
+    "docker:build:prod": "docker build -f docker/Dockerfile.prod -t w2c-problem:prod .",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
     "big.js": "^7.0.1",
