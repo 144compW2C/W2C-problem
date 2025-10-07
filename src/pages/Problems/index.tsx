@@ -6,7 +6,6 @@ import { useEffect, useReducer } from 'react'
 import { defaultState, reducer } from './reducer'
 import { useLocation } from 'react-router-dom'
 import { Action } from './action'
-import { stat } from 'fs'
 
 export default function Problems() {
     const [state, dispatch] = useReducer(reducer, undefined, defaultState)
