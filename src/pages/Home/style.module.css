@@ -108,7 +108,7 @@
         tbody{
             tr{
                 &::after{
-                    content: url("../../assets/arrow.svg");
+                    content: url("../../assets/arrow2.svg");
                     width: 15px;
                 } 
                 &:hover{
