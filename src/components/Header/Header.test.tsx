@@ -10,18 +10,20 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => (
 )
 
 describe('Header', () => {
-    // it('should render header elements correctly', () => {
-    //     render(<Header />, { wrapper: Wrapper })
-    //     // ヘッダーが表示されていることを確認
-    //     const header = screen.getByRole('banner')
-    //     expect(header).toBeInTheDocument()
-    //     // ハンバーガーメニューボタンが存在することを確認
-    //     const hamburgerButton = screen.getByAltText('ハンバーガー')
-    //     expect(hamburgerButton).toBeInTheDocument()
-    //     // アイコン画像が存在することを確認
-    //     const iconImage = screen.getByAltText('アイコン画像')
-    //     expect(iconImage).toBeInTheDocument()
-    // })
+    it('should render header elements correctly', () => {
+        render(<Header void={() => console.log('テスト')} state={true} />, {
+            wrapper: Wrapper,
+        })
+        // ヘッダーが表示されていることを確認
+        const header = screen.getByRole('banner')
+        expect(header).toBeInTheDocument()
+        // ハンバーガーメニューボタンが存在することを確認
+        // const hamburgerButton = screen.getByAltText('ハンバーガー')
+        // expect(hamburgerButton).toBeInTheDocument()
+        // // アイコン画像が存在することを確認
+        // const iconImage = screen.getByAltText('アイコン画像')
+        // expect(iconImage).toBeInTheDocument()
+    })
     // it('should render navigation links', () => {
     //     render(<Header />, { wrapper: Wrapper })
     //     // ナビゲーションリンクが存在することを確認
