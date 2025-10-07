@@ -15,6 +15,7 @@ export namespace ProblemVO {
         updated_at: string
         reviewed_at: string
         delete_flag: boolean
+        version: number
     }
 
     export function create(): ProblemVO.Type {
@@ -27,6 +28,7 @@ export namespace ProblemVO {
             updated_at: '',
             reviewed_at: '',
             delete_flag: false,
+            version: 0,
         }
     }
 }
@@ -82,6 +84,23 @@ export const testData = [
         created_at: '2025-07-01T10:00:00Z',
         updated_at: '2025-07-02T08:00:00Z',
         reviewed_at: '2025-07-02T10:00:00Z',
+        delete_flag: false,
+    },
+    {
+        id: 4,
+        title: 'jsの基本',
+        body: 'コンソールの出し方',
+        fk_tags: 2,
+        fk_status: 2,
+        creator_id: 3,
+        reviewer_id: 0,
+        level: 1,
+        difficulty: 1,
+        is_multiple_choice: true,
+        model_answer: "console.log('test')",
+        created_at: '2025-09-12 18:55:58',
+        update_at: '2025-09-12 18:55:58',
+        reviewed_at: null,
         delete_flag: false,
     },
 ]

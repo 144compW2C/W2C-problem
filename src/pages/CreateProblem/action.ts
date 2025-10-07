@@ -1,9 +1,9 @@
 import { ActionType } from './reducer'
 import { NumberUtils } from '@/utils/number_utils'
 import { CreateProblemApi } from '@/models/ApiType/CreateProblem/type'
-import { testData } from '@/models/entity/fmt/CreateProblemFmt0001'
-import { tagsTestDate } from '@/models/entity/Tags'
-import { statusTestDate } from '@/models/entity/Status'
+import { baseURL } from '@/utils/baseURL'
+import { TagsVO } from '@/models/entity/client/Tags'
+import { StatusVO } from '@/models/entity/client/Status'
 
 export namespace Action {
     export async function findCreateProblem(
@@ -29,28 +29,48 @@ export namespace Action {
                 id: NumberUtils.formatNumber(cond.id),
             })
 
-            /* バックエンドが完成したらコメントアウトを外す */
-            // const CreateProblemRes = await fetch(
-            //     // バックエンドができたらこのURLを変更
-            //     `http://test.com/create/problems?${params.toString}`,
-            //     {
-            //     method: 'GET',
-            //     cache: 'no-cache',
-            //     },
-            // )
+            /* 問題一覧を入手 */
+            const CreateProblemRes = await fetch(
+                `${baseURL}/createProblem?${params.toString}`,
+                {
+                    method: 'GET',
+                    cache: 'no-cache',
+                },
+            )
 
-            // const CreateProblemResult: CreateProblemApi.GET.Response =
-            // await CreateProblemRes.json()
-            /* ここまで */
+            const backendResult: CreateProblemApi.GET.BackendResponse =
+                await CreateProblemRes.json()
 
-            /* バックエンドが完成するまでtestDataを使用 */
+            const convertedList = backendResult.list.map((item) => ({
+                id: item.id,
+                title: item.title,
+                fk_tags: item.fk_tags ?? 0,
+                fk_status: item.fk_status ?? 0,
+                level: item.level ?? 0,
+                difficulty: item.difficulty ?? 0,
+                creator_id: item.creator_id ?? 0,
+            }))
+
+            /* タグ一覧を入手 */
+            const tagsRes = await fetch(`${baseURL}/tags`, {
+                method: 'GET',
+                cache: 'no-cache',
+            })
+            const tagsResult: TagsVO.Type[] = await tagsRes.json()
+
+            /* ステータス一覧を入手 */
+            const statusRes = await fetch(`${baseURL}/status`, {
+                method: 'GET',
+                cache: 'no-cache',
+            })
+            const statusResult: StatusVO.Type[] = await statusRes.json()
+
             const CreateProblemResult: CreateProblemApi.GET.Response = {
-                list: testData.slice(cond.offset, cond.limit),
-                total: testData.length,
-                tags: tagsTestDate,
-                status: statusTestDate,
+                list: convertedList,
+                total: backendResult.total,
+                tags: tagsResult,
+                status: statusResult,
             }
-            /* ここのまでがテスト */
 
             dispatch({
                 type: 'FIND_CREATE_PROBLEM_SUCCESS',

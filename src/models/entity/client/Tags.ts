@@ -5,6 +5,7 @@ export namespace TagsVO {
         created_at: string
         updated_at: string
         delete_flag: boolean
+        version: number
     }
 
     export function create(): TagsVO.Type {
@@ -13,6 +14,7 @@ export namespace TagsVO {
             created_at: '',
             updated_at: '',
             delete_flag: false,
+            version: 0,
         }
     }
 }

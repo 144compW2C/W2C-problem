@@ -28,16 +28,16 @@ export default function CreateProblemDetail() {
             state.isWaiting ||
             state.option.input_type
         ) {
+            console.log('早期リターン - 条件に該当')
             return // データがまだ取得されていない場合は何もしない
         }
-
         if (
             state.createProblemDetail.is_multiple_choice !==
             state.option.input_type
         ) {
+            console.log('出題形式が異なるため、処理をスキップ')
             /* 保存されている出題形式と編集中の出題形式が一緒じゃない時option.content(模範解答)を削除 */
         } else if (!state.option.input_type) {
-            /* 出題形式が選択式の時option.contentとoption.option_nameの""を削除して文字型から配列に変更 */
             Action.convertStringsToArray(dispatch, {
                 content: state.option.content,
                 option_name: state.option.option_name,
@@ -442,7 +442,20 @@ export default function CreateProblemDetail() {
                         )}
 
                         <div className={styles.append}>
-                            <Button label="下書き保存" />
+                            <Button
+                                label="下書き保存"
+                                onClick={() => {
+                                    Action.saveCreateProblemDetail(
+                                        dispatch,
+                                        state.createProblemDetail,
+                                        state.option,
+                                        state.optionContent,
+                                        state.optionName,
+                                        state.modelAnswer,
+                                        false,
+                                    )
+                                }}
+                            />
                             <Button label="申請" />
                         </div>
                     </div>

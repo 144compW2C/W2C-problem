@@ -19,6 +19,8 @@
         }
     }
     .problemsTableWrap {
+        margin-bottom: 32px;
+
         .problemHeader {
             width: 90%;
             margin: 0 auto;

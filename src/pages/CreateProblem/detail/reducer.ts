@@ -1,7 +1,6 @@
-import { OptionsVO } from '@/models/entity/Options'
-import { ProblemVO } from '@/models/entity/Problem'
-import { TagsVO } from '@/models/entity/Tags'
-import { stat } from 'fs'
+import { OptionsVO } from '@/models/entity/client/Options'
+import { ProblemVO } from '@/models/entity/client/Problem'
+import { TagsVO } from '@/models/entity/client/Tags'
 
 export type ActionType =
     //===============================================
@@ -28,6 +27,16 @@ export type ActionType =
       }
     | {
           type: 'FIND_CREATE_PROBLEM_DETAIL_FAILURE'
+      }
+    // ==============================================
+    | {
+          type: 'SAVE_CREATE_PROBLEM_DETAIL_REQUEST'
+      }
+    | {
+          type: 'SAVE_CREATE_PROBLEM_DETAIL_SUCCESS'
+      }
+    | {
+          type: 'SAVE_CREATE_PROBLEM_DETAIL_FAILURE'
       }
     // ==============================================
     | {
@@ -197,6 +206,22 @@ export function reducer(state: State, action: ActionType): State {
                 option: action.payload.option,
             }
         case 'FIND_CREATE_PROBLEM_DETAIL_FAILURE':
+            return {
+                ...state,
+                isWaiting: false,
+            }
+        // ==============================================
+        case 'SAVE_CREATE_PROBLEM_DETAIL_REQUEST':
+            return {
+                ...state,
+                isWaiting: true,
+            }
+        case 'SAVE_CREATE_PROBLEM_DETAIL_SUCCESS':
+            return {
+                ...state,
+                isWaiting: false,
+            }
+        case 'SAVE_CREATE_PROBLEM_DETAIL_FAILURE':
             return {
                 ...state,
                 isWaiting: false,
