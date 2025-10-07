@@ -1,5 +1,5 @@
 import styles from './style.module.css'
-import logo from '../../assets/w2clogo.svg'
+import logo from '../../assets/w2cLogo.svg'
 import { Button } from '@/stories/Button'
 
 export default function Login() {
