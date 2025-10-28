@@ -15,6 +15,7 @@ import CreateProblem from './pages/CreateProblem'
 import CreateProblemDetail from './pages/CreateProblem/detail'
 import Header from './components/Header/Header'
 import Admin from './pages/Admin'
+import Signup from './pages/Signup/page'
 
 const MainLayout: React.FC = () => {
     const [state, setState] = useState<boolean>(true)
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
     createRoutesFromElements(
         <>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<MainLayout />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/problem" element={<Problems />} />

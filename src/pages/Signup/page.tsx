@@ -6,7 +6,7 @@ import { Button } from '@/stories/Button'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Login() {
+export default function Signup() {
     const [showPassword, setShowPassword] = useState(false)
 
     const togglePassword = () => {
@@ -25,9 +25,9 @@ export default function Login() {
                 <div className={styles.loginForm}>
                     <form action="">
                         <div className={styles.inputWrap}>
-                            <p>ログイン</p>
+                            <p>新規登録</p>
                             <div className={styles.input}>
-                                <label>メールアドレス</label>
+                                <label>学校メールアドレス</label>
                                 <input
                                     type="email"
                                     name="email"
@@ -62,11 +62,59 @@ export default function Login() {
                                     />
                                 </div>
                             </div>
+                            <div className={styles.input}>
+                                <label htmlFor="password">
+                                    パスワード{' '}
+                                    <span>
+                                        ※確認のためにもう一度入力してください
+                                    </span>
+                                </label>
+                                <div className={styles.passwordField}>
+                                    <input
+                                        type={
+                                            showPassword ? 'text' : 'password'
+                                        }
+                                        name="password"
+                                        id="password"
+                                        autoComplete="current-password"
+                                        required
+                                    />
+                                    <img
+                                        src={
+                                            showPassword ? eyeOffIcon : eyeIcon
+                                        }
+                                        alt="パスワード表示切り替え"
+                                        onClick={togglePassword}
+                                        className={styles.eyeIcon}
+                                    />
+                                </div>
+                            </div>
+                            <div className={styles.input}>
+                                <label>名前</label>
+                                <input
+                                    type="name"
+                                    name="name"
+                                    id="name"
+                                    placeholder="例）ウェブ 二郎"
+                                    autoComplete="email"
+                                    required
+                                />
+                            </div>
+                            <div className={styles.input}>
+                                <label>クラス</label>
+                                <input
+                                    type="text"
+                                    name="text"
+                                    id="text"
+                                    placeholder="例）WD1A"
+                                    required
+                                />
+                            </div>
                         </div>
                         <div className={styles.BtnWrap}>
-                            <Button label="ログインして進む" />
-                            <Link to={'/signup'}>
-                                <p>新規登録はこちら &gt;&gt;</p>
+                            <Button label="登録する" />
+                            <Link to={'/login'}>
+                                <p>ログイン画面に戻る &gt;&gt;</p>
                             </Link>
                         </div>
                     </form>
