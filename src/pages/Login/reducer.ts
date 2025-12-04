@@ -1,5 +1,3 @@
-import { LoginFmt0001VO } from '@/models/entity/client/fmt/LoginFmt0001VO'
-
 export type ActionType =
     //===============================================
     | {
@@ -17,6 +15,11 @@ export type ActionType =
           type: 'LOGIN_SUCCESS'
           payload: {
               token: string
+              id: number
+              email: string
+              name: string
+              role: string
+              class_name: string
           }
       }
     | {
@@ -30,17 +33,26 @@ export type ActionType =
 
 export type State = {
     isWaiting: boolean
-    user: LoginFmt0001VO.Type
     token: string
     showPassword: boolean
+    id?: number
+    email: string
+    password: string
+    name: string
+    role: string
+    class_name: string
 }
 
 export function defaultState(): State {
     return {
         isWaiting: false,
-        user: LoginFmt0001VO.create(),
         token: '',
         showPassword: false,
+        email: '',
+        password: '',
+        name: '',
+        role: '',
+        class_name: '',
     }
 }
 
@@ -52,18 +64,12 @@ export function reducer(state: State, action: ActionType): State {
                 case 'login.email':
                     return {
                         ...state,
-                        user: {
-                            ...state.user,
-                            email: action.payload.value,
-                        },
+                        email: action.payload.value,
                     }
                 case 'login.password':
                     return {
                         ...state,
-                        user: {
-                            ...state.user,
-                            password: action.payload.value,
-                        },
+                        password: action.payload.value,
                     }
             }
             throw new (class SystemException {})()
@@ -80,6 +86,11 @@ export function reducer(state: State, action: ActionType): State {
                 ...state,
                 isWaiting: false,
                 token: action.payload.token,
+                id: action.payload.id,
+                name: action.payload.name,
+                email: action.payload.email,
+                role: action.payload.role,
+                class_name: action.payload.class_name,
             }
         }
         case 'LOGIN_FAILURE': {

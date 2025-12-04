@@ -4,12 +4,13 @@ import eyeIcon from '../../assets/eye.svg'
 import eyeOffIcon from '../../assets/eyeOff.svg'
 import { Button } from '@/stories/Button'
 import { useReducer } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { defaultState, reducer } from './reducer'
 import { Action } from './action'
 
 export default function Signup() {
     const [state, dispatch] = useReducer(reducer, undefined, defaultState)
+    const navigate = useNavigate()
 
     console.log(state)
 
@@ -162,7 +163,7 @@ export default function Signup() {
                             <Button
                                 label="登録する"
                                 onClick={() => {
-                                    Action.signUp(dispatch, {
+                                    Action.signUp(dispatch, navigate, {
                                         name: state.name,
                                         email: state.email,
                                         password: state.password,

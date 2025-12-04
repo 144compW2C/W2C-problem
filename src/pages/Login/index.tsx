@@ -3,15 +3,22 @@ import logo from '../../assets/w2cLogo.svg'
 import eyeIcon from '../../assets/eye.svg'
 import eyeOffIcon from '../../assets/eyeOff.svg'
 import { Button } from '@/stories/Button'
-import { useReducer } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useReducer } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { defaultState, reducer } from './reducer'
 import { Action } from './action'
 
 export default function Login() {
     const [state, dispatch] = useReducer(reducer, undefined, defaultState)
+    const navigate = useNavigate()
+    const location = useLocation()
 
     console.log(state)
+
+    useEffect(() => {
+        const { email } = location.state || {}
+        Action.editForm(dispatch, 'login.email', email)
+    }, [])
 
     return (
         <>
@@ -87,7 +94,12 @@ export default function Login() {
                             <Button
                                 label="ログインして進む"
                                 onClick={() =>
-                                    Action.logIn(dispatch, state.user)
+                                    Action.logIn(
+                                        dispatch,
+                                        state.email,
+                                        state.password,
+                                        navigate,
+                                    )
                                 }
                             />
                             <Link to={'/signup'}>

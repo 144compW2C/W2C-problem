@@ -1,8 +1,9 @@
 import styles from './style.module.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
     const [filter, setFilter] = useState('stillAns')
+    const [userName, setUserName] = useState('')
 
     const tasks = [
         {
@@ -36,10 +37,26 @@ export default function Home() {
         filter === 'all' ? true : task.status === filter,
     )
 
+    useEffect(() => {
+        function getCookie(name: string) {
+            const match = document.cookie.match(
+                new RegExp(`(?:^|; )${name}=([^;]*)`),
+            )
+            return match ? decodeURIComponent(match[1]) : null
+        }
+
+        const userStr = getCookie('user')
+        const user = userStr ? JSON.parse(userStr) : null
+
+        const name = user?.name
+
+        setUserName(name)
+    }, [])
+
     return (
         <>
             <div className={styles.content}>
-                <h1>平田晃大</h1>
+                <h1>{userName}</h1>
                 <div className={styles.filterNav}>
                     <div className={styles.filterWrap}>
                         <select name="genre" id="genreFilter">

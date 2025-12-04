@@ -6,6 +6,11 @@ export namespace LoginApi {
         }
         export type Response = {
             token: string
+            id: number
+            email: string
+            name: string
+            role: string
+            class_name: string
         }
     }
 }

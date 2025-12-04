@@ -1,7 +1,7 @@
 import { SignupApi } from '@/models/ApiType/Signup/type'
 import { ActionType } from './reducer'
 import { baseURL } from '@/utils/baseURL'
-import { useNavigate } from 'react-router-dom'
+import type { NavigateFunction } from 'react-router-dom'
 
 export namespace Action {
     export async function editForm(
@@ -20,6 +20,7 @@ export namespace Action {
 
     export async function signUp(
         dispatch: React.Dispatch<ActionType>,
+        navigate: NavigateFunction,
         cond: {
             name: string
             email: string
@@ -29,7 +30,6 @@ export namespace Action {
             class_name: string
         },
     ) {
-        const navigate = useNavigate()
         dispatch({ type: 'SIGNUP_REQUEST' })
 
         try {
@@ -72,7 +72,7 @@ export namespace Action {
                 },
             })
             navigate('/login', {
-                state: { name: result.name, email: result.email },
+                state: { email: result.email },
             })
         } catch (e) {
             dispatch({ type: 'SIGNUP_FAILURE' })

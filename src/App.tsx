@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
 import {
     createBrowserRouter,
@@ -7,7 +7,7 @@ import {
     Route,
     RouterProvider,
 } from 'react-router-dom'
-import Home from './pages/Home/page'
+import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Problems from './pages/Problems'
 import CreateProblem from './pages/CreateProblem'

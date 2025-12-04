@@ -1,7 +1,7 @@
-import { LoginFmt0001VO } from '@/models/entity/client/fmt/LoginFmt0001VO'
 import { ActionType } from './reducer'
 import { LoginApi } from '@/models/ApiType/Login/type'
 import { baseURL } from '@/utils/baseURL'
+import type { NavigateFunction } from 'react-router-dom'
 
 export namespace Action {
     export async function editForm(
@@ -20,18 +20,20 @@ export namespace Action {
 
     export async function logIn(
         dispatch: React.Dispatch<ActionType>,
-        user: LoginFmt0001VO.Type,
+        email: string,
+        password: string,
+        navigate: NavigateFunction,
     ) {
         dispatch({ type: 'LOGIN_REQUEST' })
 
-        if (!user.email || !user.password) {
+        if (!email || !password) {
             throw new Error('未入力項目があります')
         }
 
         try {
             const json: LoginApi.POST.Request = {
-                email: user.email,
-                password: user.password,
+                email,
+                password,
             }
 
             const res = await fetch(`${baseURL}auth/login`, {
@@ -48,8 +50,28 @@ export namespace Action {
                 type: 'LOGIN_SUCCESS',
                 payload: {
                     token: result.token,
+                    id: result.id,
+                    email: result.email,
+                    name: result.name,
+                    role: result.role,
+                    class_name: result.class_name,
                 },
             })
+
+            const maxAge = 60 * 60 * 24 * 7
+
+            document.cookie = `token=${result.token}; path=/; max-age=${maxAge}`
+
+            const userData = {
+                id: result.id,
+                name: result.name,
+                email: result.email,
+                role: result.role,
+                class_name: result.class_name,
+            }
+            document.cookie = `user=${encodeURIComponent(JSON.stringify(userData))}; path=/; max-age=${maxAge}`
+
+            navigate('/')
         } catch (e) {
             dispatch({ type: 'LOGIN_FAILURE' })
             throw e
