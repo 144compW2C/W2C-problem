@@ -25,12 +25,13 @@ export namespace Action {
         dispatch({ type: 'LOGIN_REQUEST' })
 
         if (!user.email || !user.password) {
-            return console.log('入力されていません')
+            throw new Error('未入力項目があります')
         }
 
         try {
             const json: LoginApi.POST.Request = {
-                user,
+                email: user.email,
+                password: user.password,
             }
 
             const res = await fetch(`${baseURL}auth/login`, {
@@ -55,7 +56,7 @@ export namespace Action {
         }
     }
 
-    export function ShowPass(dispatch: React.Dispatch<ActionType>) {
+    export async function ShowPass(dispatch: React.Dispatch<ActionType>) {
         dispatch({ type: 'SHOW_PASS' })
     }
 }

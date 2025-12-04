@@ -3,15 +3,15 @@ import logo from '../../assets/w2cLogo.svg'
 import eyeIcon from '../../assets/eye.svg'
 import eyeOffIcon from '../../assets/eyeOff.svg'
 import { Button } from '@/stories/Button'
-import { useState } from 'react'
+import { useReducer } from 'react'
 import { Link } from 'react-router-dom'
+import { defaultState, reducer } from './reducer'
+import { Action } from './action'
 
 export default function Signup() {
-    const [showPassword, setShowPassword] = useState(false)
+    const [state, dispatch] = useReducer(reducer, undefined, defaultState)
 
-    const togglePassword = () => {
-        setShowPassword((prev) => !prev)
-    }
+    console.log(state)
 
     return (
         <>
@@ -35,6 +35,13 @@ export default function Signup() {
                                     placeholder="学籍番号@ecc.ac.jp"
                                     autoComplete="email"
                                     required
+                                    onChange={(e) => {
+                                        Action.editForm(
+                                            dispatch,
+                                            'signup.email',
+                                            e.target.value,
+                                        )
+                                    }}
                                 />
                             </div>
                             <div className={styles.input}>
@@ -45,19 +52,32 @@ export default function Signup() {
                                 <div className={styles.passwordField}>
                                     <input
                                         type={
-                                            showPassword ? 'text' : 'password'
+                                            state.showPassword
+                                                ? 'text'
+                                                : 'password'
                                         }
                                         name="password"
                                         id="password"
                                         autoComplete="current-password"
                                         required
+                                        onChange={(e) => {
+                                            Action.editForm(
+                                                dispatch,
+                                                'signup.password',
+                                                e.target.value,
+                                            )
+                                        }}
                                     />
                                     <img
                                         src={
-                                            showPassword ? eyeOffIcon : eyeIcon
+                                            state.showPassword
+                                                ? eyeOffIcon
+                                                : eyeIcon
                                         }
                                         alt="パスワード表示切り替え"
-                                        onClick={togglePassword}
+                                        onClick={() =>
+                                            Action.ShowPass(dispatch)
+                                        }
                                         className={styles.eyeIcon}
                                     />
                                 </div>
@@ -72,19 +92,32 @@ export default function Signup() {
                                 <div className={styles.passwordField}>
                                     <input
                                         type={
-                                            showPassword ? 'text' : 'password'
+                                            state.showPassword
+                                                ? 'text'
+                                                : 'password'
                                         }
                                         name="password"
                                         id="password"
                                         autoComplete="current-password"
                                         required
+                                        onChange={(e) => {
+                                            Action.editForm(
+                                                dispatch,
+                                                'signup.conPassword',
+                                                e.target.value,
+                                            )
+                                        }}
                                     />
                                     <img
                                         src={
-                                            showPassword ? eyeOffIcon : eyeIcon
+                                            state.showPassword
+                                                ? eyeOffIcon
+                                                : eyeIcon
                                         }
                                         alt="パスワード表示切り替え"
-                                        onClick={togglePassword}
+                                        onClick={() =>
+                                            Action.ShowPass(dispatch)
+                                        }
                                         className={styles.eyeIcon}
                                     />
                                 </div>
@@ -98,6 +131,13 @@ export default function Signup() {
                                     placeholder="例）ウェブ 二郎"
                                     autoComplete="email"
                                     required
+                                    onChange={(e) => {
+                                        Action.editForm(
+                                            dispatch,
+                                            'signup.name',
+                                            e.target.value,
+                                        )
+                                    }}
                                 />
                             </div>
                             <div className={styles.input}>
@@ -108,11 +148,30 @@ export default function Signup() {
                                     id="text"
                                     placeholder="例）WD1A"
                                     required
+                                    onChange={(e) => {
+                                        Action.editForm(
+                                            dispatch,
+                                            'signup.class_name',
+                                            e.target.value,
+                                        )
+                                    }}
                                 />
                             </div>
                         </div>
                         <div className={styles.BtnWrap}>
-                            <Button label="登録する" />
+                            <Button
+                                label="登録する"
+                                onClick={() => {
+                                    Action.signUp(dispatch, {
+                                        name: state.name,
+                                        email: state.email,
+                                        password: state.password,
+                                        conPassword: state.conPassword,
+                                        role: state.role,
+                                        class_name: state.class_name,
+                                    })
+                                }}
+                            />
                             <Link to={'/login'}>
                                 <p>ログイン画面に戻る &gt;&gt;</p>
                             </Link>

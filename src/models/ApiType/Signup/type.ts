@@ -1,11 +1,16 @@
-export namespace LoginApi {
+export namespace SignupApi {
     export namespace POST {
         export type Request = {
+            name: string
             email: string
             password: string
+            role: string
+            class_name: string
         }
+
         export type Response = {
-            token: string
+            name: string
+            email: string
         }
     }
 }
