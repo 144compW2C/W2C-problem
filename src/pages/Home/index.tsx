@@ -1,8 +1,13 @@
+import { getCookie } from '@/utils/getCookie'
 import styles from './style.module.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { UserCookieFmt0001VO } from '@/models/entity/client/fmt/UserCookieFmt0001VO'
 
 export default function Home() {
     const [filter, setFilter] = useState('stillAns')
+    const [userName, setUserName] = useState('')
+    const navigate = useNavigate()
 
     const tasks = [
         {
@@ -36,10 +41,21 @@ export default function Home() {
         filter === 'all' ? true : task.status === filter,
     )
 
+    useEffect(() => {
+        const userStr = getCookie('user')
+        const user: UserCookieFmt0001VO.Type = userStr
+            ? JSON.parse(userStr)
+            : null
+
+        const name = user.name
+
+        setUserName(name)
+    }, [])
+
     return (
         <>
             <div className={styles.content}>
-                <h1>平田晃大</h1>
+                <h1>{userName}</h1>
                 <div className={styles.filterNav}>
                     <div className={styles.filterWrap}>
                         <select name="genre" id="genreFilter">
@@ -107,6 +123,17 @@ export default function Home() {
                             ))}
                         </tbody>
                     </table>
+                </div>
+                <div className={styles.logoutBtn}>
+                    <button
+                        onClick={() => {
+                            document.cookie = 'W2CToken=; path=/; max-age=0'
+                            document.cookie = 'user=; path=/; max-age=0'
+                            navigate('/login')
+                        }}
+                    >
+                        ログアウト
+                    </button>
                 </div>
             </div>
         </>

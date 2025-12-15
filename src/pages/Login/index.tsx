@@ -3,15 +3,20 @@ import logo from '../../assets/w2cLogo.svg'
 import eyeIcon from '../../assets/eye.svg'
 import eyeOffIcon from '../../assets/eyeOff.svg'
 import { Button } from '@/stories/Button'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useReducer } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { defaultState, reducer } from './reducer'
+import { Action } from './action'
 
 export default function Login() {
-    const [showPassword, setShowPassword] = useState(false)
+    const [state, dispatch] = useReducer(reducer, undefined, defaultState)
+    const navigate = useNavigate()
+    const location = useLocation()
 
-    const togglePassword = () => {
-        setShowPassword((prev) => !prev)
-    }
+    useEffect(() => {
+        const { email } = location.state || {}
+        Action.editForm(dispatch, 'login.email', email)
+    }, [])
 
     return (
         <>
@@ -35,6 +40,13 @@ export default function Login() {
                                     placeholder="学籍番号@ecc.ac.jp"
                                     autoComplete="email"
                                     required
+                                    onChange={(e) => {
+                                        Action.editForm(
+                                            dispatch,
+                                            'login.email',
+                                            e.target.value,
+                                        )
+                                    }}
                                 />
                             </div>
                             <div className={styles.input}>
@@ -45,26 +57,49 @@ export default function Login() {
                                 <div className={styles.passwordField}>
                                     <input
                                         type={
-                                            showPassword ? 'text' : 'password'
+                                            state.showPassword
+                                                ? 'text'
+                                                : 'password'
                                         }
                                         name="password"
                                         id="password"
                                         autoComplete="current-password"
                                         required
+                                        onChange={(e) => {
+                                            Action.editForm(
+                                                dispatch,
+                                                'login.password',
+                                                e.target.value,
+                                            )
+                                        }}
                                     />
                                     <img
                                         src={
-                                            showPassword ? eyeOffIcon : eyeIcon
+                                            state.showPassword
+                                                ? eyeOffIcon
+                                                : eyeIcon
                                         }
                                         alt="パスワード表示切り替え"
-                                        onClick={togglePassword}
+                                        onClick={() =>
+                                            Action.ShowPass(dispatch)
+                                        }
                                         className={styles.eyeIcon}
                                     />
                                 </div>
                             </div>
                         </div>
                         <div className={styles.BtnWrap}>
-                            <Button label="ログインして進む" />
+                            <Button
+                                label="ログインして進む"
+                                onClick={() =>
+                                    Action.logIn(
+                                        dispatch,
+                                        state.email,
+                                        state.password,
+                                        navigate,
+                                    )
+                                }
+                            />
                             <Link to={'/signup'}>
                                 <p>新規登録はこちら &gt;&gt;</p>
                             </Link>
