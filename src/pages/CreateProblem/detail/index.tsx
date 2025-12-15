@@ -257,7 +257,7 @@ export default function CreateProblemDetail() {
                                         type="text"
                                         id="zipText"
                                         placeholder="ファイルの名前"
-                                        onChange={(e) => {
+                                        onChange={() => {
                                             /* 初期zip取得のAPIを叩くアクションを指定 */
                                             // Action.editForm(dispatch, 'newCreate.problem.title', e.target.value)
                                         }}

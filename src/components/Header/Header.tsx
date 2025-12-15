@@ -1,7 +1,6 @@
 import styles from './style.module.css'
 import hamburgerIcon from '../../assets/hamburger.svg'
 import iconImg from '../../assets/icon.jpg'
-import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 type Type = {
