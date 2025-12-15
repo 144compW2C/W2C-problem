@@ -1,5 +1,6 @@
 import { ActionType } from './reducer'
 import { LoginApi } from '@/models/ApiType/Login/type'
+import { UserCookieFmt0001VO } from '@/models/entity/client/fmt/UserCookieFmt0001VO'
 import { baseURL } from '@/utils/baseURL'
 import type { NavigateFunction } from 'react-router-dom'
 
@@ -60,9 +61,9 @@ export namespace Action {
 
             const maxAge = 60 * 60 * 24 * 7
 
-            document.cookie = `token=${result.token}; path=/; max-age=${maxAge}`
+            document.cookie = `W2CToken=${result.token}; path=/; max-age=${maxAge}`
 
-            const userData = {
+            const userData: UserCookieFmt0001VO.Type = {
                 id: result.id,
                 name: result.name,
                 email: result.email,

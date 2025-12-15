@@ -13,8 +13,6 @@ export default function Login() {
     const navigate = useNavigate()
     const location = useLocation()
 
-    console.log(state)
-
     useEffect(() => {
         const { email } = location.state || {}
         Action.editForm(dispatch, 'login.email', email)

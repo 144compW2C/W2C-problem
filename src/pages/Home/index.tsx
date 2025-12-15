@@ -1,9 +1,13 @@
+import { getCookie } from '@/utils/getCookie'
 import styles from './style.module.css'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { UserCookieFmt0001VO } from '@/models/entity/client/fmt/UserCookieFmt0001VO'
 
 export default function Home() {
     const [filter, setFilter] = useState('stillAns')
     const [userName, setUserName] = useState('')
+    const navigate = useNavigate()
 
     const tasks = [
         {
@@ -38,17 +42,12 @@ export default function Home() {
     )
 
     useEffect(() => {
-        function getCookie(name: string) {
-            const match = document.cookie.match(
-                new RegExp(`(?:^|; )${name}=([^;]*)`),
-            )
-            return match ? decodeURIComponent(match[1]) : null
-        }
-
         const userStr = getCookie('user')
-        const user = userStr ? JSON.parse(userStr) : null
+        const user: UserCookieFmt0001VO.Type = userStr
+            ? JSON.parse(userStr)
+            : null
 
-        const name = user?.name
+        const name = user.name
 
         setUserName(name)
     }, [])
@@ -124,6 +123,17 @@ export default function Home() {
                             ))}
                         </tbody>
                     </table>
+                </div>
+                <div className={styles.logoutBtn}>
+                    <button
+                        onClick={() => {
+                            document.cookie = 'W2CToken=; path=/; max-age=0'
+                            document.cookie = 'user=; path=/; max-age=0'
+                            navigate('/login')
+                        }}
+                    >
+                        ログアウト
+                    </button>
                 </div>
             </div>
         </>
