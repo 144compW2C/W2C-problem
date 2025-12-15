@@ -21,4 +21,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+    args: {
+        void: () => {
+            // ダミーの関数。クリック時などに呼ばれる想定
+            console.log('clicked')
+        },
+        state: false, // 初期状態
+    },
+}

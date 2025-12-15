@@ -1,8 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import { describe, it, expect } from 'vitest'
 import Header from './Header'
-import styles from './style.module.css'
 
 // テスト用のWrapper
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
