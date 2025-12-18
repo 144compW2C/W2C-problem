@@ -44,7 +44,7 @@ const MainLayout: React.FC = () => {
 
     return (
         <main>
-            <Header void={() => setState(state)} state={state} />
+            <Header void={() => setState(state)} state={state} user={user} />
             <div
                 style={{
                     marginLeft: state ? '240px' : '0px',
