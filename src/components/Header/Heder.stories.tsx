@@ -2,6 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { BrowserRouter } from 'react-router-dom'
 
 import Header from './Header'
+import {
+    testUserData,
+    UserCookieFmt0001VO,
+} from '@/models/entity/client/fmt/UserCookieFmt0001VO'
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -21,6 +25,8 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const user: UserCookieFmt0001VO.Type = testUserData
+
 export const Default: Story = {
     args: {
         void: () => {
@@ -28,5 +34,6 @@ export const Default: Story = {
             console.log('clicked')
         },
         state: false, // 初期状態
+        user,
     },
 }
