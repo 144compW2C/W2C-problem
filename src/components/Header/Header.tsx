@@ -2,18 +2,17 @@ import styles from './style.module.css'
 import hamburgerIcon from '../../assets/hamburger.svg'
 import iconImg from '../../assets/icon.jpg'
 import { Link, useLocation } from 'react-router-dom'
+import { UserCookieFmt0001VO } from '@/models/entity/client/fmt/UserCookieFmt0001VO'
 
 type Type = {
     void: () => void
     state: boolean
+    user: UserCookieFmt0001VO.Type | undefined
 }
 
 export default function Header(props: Type) {
-    // const [isOpen, setIsOpen] = useState(false)
-    // const toggleHamburger = () => {
-    //     setIsOpen(!isOpen)
-    // }
     const location = useLocation()
+
     return (
         <header className={styles.headerWrap}>
             <div className={styles.header}>
@@ -68,16 +67,18 @@ export default function Header(props: Type) {
                         >
                             <li>問題作成</li>
                         </Link>
-                        <Link
-                            to={'/admin'}
-                            className={
-                                location.pathname.startsWith('/admin')
-                                    ? styles.active
-                                    : ''
-                            }
-                        >
-                            <li>運営管理</li>
-                        </Link>
+                        {props.user?.role === 'reviewer' && (
+                            <Link
+                                to={'/admin'}
+                                className={
+                                    location.pathname.startsWith('/admin')
+                                        ? styles.active
+                                        : ''
+                                }
+                            >
+                                <li>運営管理</li>
+                            </Link>
+                        )}
                     </ul>
                 </nav>
             </div>
