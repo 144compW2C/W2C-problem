@@ -2,6 +2,13 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## 引き続き用AI 
+
+このプロジェクトでは、Claude Code Skills を利用した  
+**引き継ぎ用AI**を導入しています。
+
+👉 [使い方はこちら](./.claude/README.md)
+
 ## 🐳 Docker での起動方法
 
 ### 前提条件
