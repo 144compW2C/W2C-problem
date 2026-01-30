@@ -24,9 +24,6 @@ export default function Login() {
                 <h1>
                     <img src={logo} alt="W2Cロゴ" />
                 </h1>
-                <p className={styles.errorMes}>
-                    学校のメールアドレスを入力してください
-                </p>
                 <div className={styles.loginForm}>
                     <form action="">
                         <div className={styles.inputWrap}>
@@ -100,6 +97,12 @@ export default function Login() {
                                     )
                                 }
                             />
+                            {state.error && (
+                                <p className={styles.errorMes}>
+                                    {/* 学校のメールアドレスを入力してください */}
+                                    {state.error}
+                                </p>
+                            )}
                             <Link to={'/signup'}>
                                 <p>新規登録はこちら &gt;&gt;</p>
                             </Link>

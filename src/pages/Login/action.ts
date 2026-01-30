@@ -2,6 +2,7 @@ import { ActionType } from './reducer'
 import { LoginApi } from '@/models/ApiType/Login/type'
 import { UserCookieFmt0001VO } from '@/models/entity/client/fmt/UserCookieFmt0001VO'
 import { baseURL } from '@/utils/baseURL'
+import { validateLogin } from '@/utils/validation/login'
 import type { NavigateFunction } from 'react-router-dom'
 
 export namespace Action {
@@ -27,11 +28,18 @@ export namespace Action {
     ) {
         dispatch({ type: 'LOGIN_REQUEST' })
 
-        if (!email || !password) {
-            throw new Error('未入力項目があります')
-        }
-
         try {
+            const validationError = validateLogin(email, password)
+            if (validationError) {
+                dispatch({
+                    type: 'ERROR_MES',
+                    payload: {
+                        error: validationError,
+                    },
+                })
+                throw new Error(validationError)
+            }
+
             const json: LoginApi.POST.Request = {
                 email,
                 password,
@@ -45,7 +53,22 @@ export namespace Action {
                 body: JSON.stringify(json),
             })
 
-            const result: LoginApi.POST.Response = await res.json()
+            const result = await res.json()
+
+            if (!res.ok) {
+                const message =
+                    typeof result?.error === 'string'
+                        ? result.error
+                        : 'ログインに失敗しました'
+                dispatch({
+                    type: 'ERROR_MES',
+                    payload: {
+                        error: message,
+                    },
+                })
+                dispatch({ type: 'LOGIN_FAILURE' })
+                throw new Error(message)
+            }
 
             dispatch({
                 type: 'LOGIN_SUCCESS',

@@ -29,6 +29,13 @@ export type ActionType =
     | {
           type: 'SHOW_PASS'
       }
+    //===============================================
+    | {
+          type: 'ERROR_MES'
+          payload: {
+              error: string
+          }
+      }
 //===============================================
 
 export type State = {
@@ -41,6 +48,7 @@ export type State = {
     name: string
     role: string
     class_name: string
+    error: string
 }
 
 export function defaultState(): State {
@@ -53,6 +61,7 @@ export function defaultState(): State {
         name: '',
         role: '',
         class_name: '',
+        error: '',
     }
 }
 
@@ -104,6 +113,13 @@ export function reducer(state: State, action: ActionType): State {
             return {
                 ...state,
                 showPassword: state.showPassword ? false : true,
+            }
+        }
+        //===============================================
+        case 'ERROR_MES': {
+            return {
+                ...state,
+                error: action.payload.error,
             }
         }
         //===============================================
