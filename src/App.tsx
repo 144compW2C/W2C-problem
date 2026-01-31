@@ -22,7 +22,9 @@ import { getCookie, getToken } from './utils/getCookie'
 
 const RequireAuth: React.FC = () => {
     const token = getToken('W2CToken')
-    return token ? <Outlet /> : <Navigate to="/login" replace />
+    const hasToken =
+        !!token && token !== 'undefined' && token !== 'null' && token !== ''
+    return hasToken ? <Outlet /> : <Navigate to="/login" replace />
 }
 
 const MainLayout: React.FC = () => {
